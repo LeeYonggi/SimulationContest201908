@@ -27,6 +27,7 @@ protected:
 public:
 	Vector2 dirVector = { 1, 0 };
 	Vector2 targetPos = { 0, 0 };
+	float moveSpeed = 100.0f;
 
 public:
 	// GameObject을(를) 통해 상속됨
@@ -34,6 +35,9 @@ public:
 	virtual void Update();
 	virtual void Render();
 	virtual void Release();
+
+public:
+	void ChangeState(CHARACTER_STATE _state) { state = _state; }
 
 public:
 	void CharacterStayIdle();

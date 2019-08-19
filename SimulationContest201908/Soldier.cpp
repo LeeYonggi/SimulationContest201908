@@ -9,11 +9,15 @@ void Soldier::Init()
 
 	animator->AddAnime("Idle",
 		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/gunner/idle/idle%d.png", 1, 4), true));
+
+	animator->AddAnime("Move",
+		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/gunner/run/gunner_run%d.png", 1, 6), true));
+
 	animator->SetNowAnime("Idle");
 
-	stateFunc[state] = &Character::CharacterStayIdle;
-	stateFunc[state] = &Character::CharacterMove;
-	stateFunc[state] = &Character::CharacterDie;
+	stateFunc[IDLE] = &Character::CharacterStayIdle;
+	stateFunc[MOVE] = &Character::CharacterMove;
+	stateFunc[DIE] = &Character::CharacterDie;
 
 	gun = new Gun(RESOURCEMANAGER->AddAnimeTexture("Character/gunner/effect/effect%d.png", 1, 7),
 		this);
@@ -29,7 +33,7 @@ void Soldier::Update()
 
 void Soldier::Render()
 {
-	RENDERMANAGER->DrawImage(mainTexture, { 0, 0, 0 });
+	RENDERMANAGER->DrawImage(mainTexture, pos, scale, rotate, color);
 }
 
 void Soldier::Release()

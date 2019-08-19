@@ -18,5 +18,6 @@ public:
 
 public:
 	void SelectObject();
+	void MoveObject();
 };
 

@@ -20,9 +20,9 @@ public:
 	void Update();
 
 public:
-	bool IsKeyDown(bool key) { return (pastKey[key] == false && nowKey[key] == true); }
-	bool IsKeyPress(bool key) { return (pastKey[key] == true && nowKey[key] == true); }
-	bool IsKeyUp(bool key) { return (pastKey[key] == true && nowKey[key] == false); }
+	bool IsKeyDown(int key) { return (pastKey[key] == false && nowKey[key] == true); }
+	bool IsKeyPress(int key) { return (pastKey[key] == true && nowKey[key] == true); }
+	bool IsKeyUp(int key) { return (pastKey[key] == true && nowKey[key] == false); }
 	Vector2 GetMouse() { return mouse; }
 };
 

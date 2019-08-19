@@ -33,7 +33,15 @@ Vector2 WorldToScreen(Vector2 p1)
 	screenSize.x = screenSize.x / (float)SCREEN_X;
 	screenSize.y = screenSize.y / (float)SCREEN_X;
 
-	temp.x += p1.x - screenSize.x * SCREEN_X;
-	temp.y += p1.y - screenSize.y * SCREEN_Y;
+	temp.x += screenSize.x * (p1.x - SCREEN_X * 0.5f);
+	temp.y += screenSize.y * (SCREEN_Y * 0.5f -  p1.y);
 	return temp;
+}
+
+float Vec2Distance(Vector2 p1, Vector2 p2)
+{
+	Vector2 temp = p2 - p1;
+	float d = temp.x * temp.x + temp.y * temp.y;
+
+	return sqrt(d);
 }
