@@ -71,9 +71,8 @@ void MouseControll::MoveObject()
 
 	for (auto iter : selectList)
 	{
-		iter->ChangeState(Character::MOVE);
+		iter->SendMessageState("ChangeMove");
 		iter->targetPos = mouse;
-		iter->isDirectAttack = false;
 	}
 }
 

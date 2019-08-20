@@ -386,6 +386,7 @@
   <ItemGroup>
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Building.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CharacterState.cpp" />
     <ClCompile Include="Firebat.cpp" />
     <ClCompile Include="GameManager.cpp" />
@@ -399,6 +400,7 @@
     <ClCompile Include="Utility.cpp" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Building.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterState.h" />

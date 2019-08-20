@@ -4,7 +4,6 @@
 Character::Character()
 {
 	animator = new Animator(this);
-	state = new Character_Idle(false);
 }
 
 Character::~Character()
@@ -20,11 +19,24 @@ void Character::Init()
 void Character::Update()
 {
 	animator->Update();
+
+	state->Update();
+
 	if (dirVector.x < 0)
 		flip.first = true;
 	else
 		flip.first = false;
 
+	if (attackedTime > 0.0f)
+	{
+		color = { 1, 0, 0, 1 };
+		attackedTime -= ELTime;
+	}
+	else
+		color = { 1, 1, 1, 1 };
+
+	if (hp < 0)
+		ChangeState(new Character_Die(this));
 }
 
 void Character::Render()
@@ -36,43 +48,7 @@ void Character::Release()
 }
 
 
-void Character::CharacterMove()
-{
-	animator->SetNowAnime("Move");
-
-	Vector2 moveVector = { 0, 0 };
-	moveVector = targetPos - Vector2(pos);
-	D3DXVec2Normalize(&moveVector, &moveVector);
-	if (moveVector.x < 0)
-		dirVector.x = -1;
-	else
-		dirVector.x = 1;
-
-	pos.x += moveVector.x * ELTime * moveSpeed;
-	pos.y += moveVector.y * ELTime * moveSpeed;
-
-	if (Vec2Distance(Vector2(pos), targetPos) < 10.0f)
-		ChangeState(IDLE);
-
-	CharacterCollision();
-	
-	if (isDirectAttack == false) return;
-
-	GameObject* obj = IsCharacterRader(attackRader);
-	if (obj)
-	{
-		targetObject = obj;
-		ChangeState(ATTACK);
-	}
-}
-
-
-void Character::CharacterDie()
-{
-
-}
-
-void Character::CharacterCollision()
+string Character::CharacterCollision()
 {
 	auto back = OBJECTMANAGER->GetObjectList(BACKGROUND2);
 
@@ -108,6 +84,8 @@ void Character::CharacterCollision()
 	}
 
 	auto character1 = OBJECTMANAGER->GetObjectList(PLAYER);
+	if (tag == PLAYER)
+		character1 = OBJECTMANAGER->GetObjectList(ENEMY);
 
 	for (auto obj : *character1)
 	{
@@ -122,9 +100,13 @@ void Character::CharacterCollision()
 	}
 
 	auto character2 = OBJECTMANAGER->GetObjectList(ENEMY);
+	if (tag == PLAYER)
+		character2 = OBJECTMANAGER->GetObjectList(PLAYER);
 
-	for (auto obj : *character1)
+	string str = "NONE";
+	for (auto obj : *character2)
 	{
+		if (obj == this) continue;
 		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius))
 		{
 			Vector2 dis = obj->pos - pos;
@@ -132,8 +114,10 @@ void Character::CharacterCollision()
 
 			pos.x -= dis.x * ELTime * moveSpeed;
 			pos.y -= dis.y * ELTime * moveSpeed;
+			str = "CollisionStack";
 		}
 	}
+	return str;
 }
 
 GameObject* Character::IsCharacterRader(float radar)
@@ -151,4 +135,10 @@ GameObject* Character::IsCharacterRader(float radar)
 		}
 	}
 	return nullptr;
+}
+
+void Character::CharacterAttacked(int damage)
+{
+	attackedTime = 0.4f;
+	hp -= damage;
 }

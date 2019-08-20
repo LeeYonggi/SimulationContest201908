@@ -13,6 +13,8 @@ int RandomNumber(int low, int high);
 
 bool CircleCollision(Vector2 p1, float r1, Vector2 p2, float r2);
 
+bool WallCollision(Vector2 p1, Vector2 _size);
+
 template<typename T>
 T Lerp(T p1, T p2, float d)
 {

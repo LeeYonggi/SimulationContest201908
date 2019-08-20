@@ -25,10 +25,11 @@ void ObjectManager::Update()
 		{
 			if ((*obj)->destroy)
 			{
+				sortList.remove((*obj));
+
 				SAFE_RELEASE((*obj));
 				SAFE_DELETE((*obj));
 
-				sortList.remove((*obj));
 				obj = iter->second.erase(obj);
 			}
 			else

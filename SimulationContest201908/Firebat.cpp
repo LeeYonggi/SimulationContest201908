@@ -1,6 +1,8 @@
 #include "DXUT.h"
 #include "Firebat.h"
 
+#include "Bullet.h"
+
 Firebat::Firebat()
 {
 }
@@ -21,10 +23,7 @@ void Firebat::Init()
 
 	animator->SetNowAnime("Idle");
 
-	stateFunc[IDLE] = &Character::CharacterMoveIdle;
-	stateFunc[MOVE] = &Character::CharacterMove;
-	stateFunc[ATTACK] = &Character::CharacterAttack;
-	stateFunc[DIE] = &Character::CharacterDie;
+	ChangeState(new Character_Idle(this));
 
 	vector<Texture*> anime;
 	anime.push_back(RESOURCEMANAGER->AddTexture("Character/firebat/weapon/flamethrower.png"));
@@ -32,12 +31,18 @@ void Firebat::Init()
 	OBJECTMANAGER->AddObject(GUN, gun);
 	gun->pivot = { 0, -5 };
 	gun->distance = 10.0f;
+
+	moveRadar = 200.0f;
+	attackRader = 100.0f;
+
+	radius = 25.0f;
+
+	isMoveIdle = true;
 }
 
 void Firebat::Update()
 {
 	Character::Update();
-	(this->*stateFunc[state])();
 }
 
 void Firebat::Render()
@@ -52,13 +57,41 @@ void Firebat::Release()
 void Firebat::CharacterAttack()
 {
 	animator->SetNowAnime("Idle");
-	if (!targetObject || !CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRader))
+	if (!targetObject)
 	{
-		ChangeState(MOVE);
-		isDirectAttack = true;
+		ChangeState(new Character_Idle(this));
+		return;
+	}
+	if (!CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRader) && reloadTime > 0.0f)
+	{
+		ChangeState(new Character_Move(true, this));
+		targetPos = Vector2(targetObject->pos);
+		reloadTime = 0.0f;
+		return;
 	}
 
 	Vector2 dir = targetObject->pos - pos;
 	D3DXVec2Normalize(&dir, &dir);
 	dirVector = dir;
+
+	if (time < 0.0f && reloadTime < 0.0f)
+	{
+		gun->GunAttack();
+		Bullet* bullet = new Bullet(Bullet::FIREBAT, targetObject);
+		Vector2 temp = gun->GetShootPos();
+		bullet->pos.x = temp.x;
+		bullet->pos.y = temp.y;
+		
+		if (tag == PLAYER)
+			OBJECTMANAGER->AddObject(PLAYER_BULLET, bullet);
+		else
+			OBJECTMANAGER->AddObject(ENEMY_BULLET, bullet);
+
+		time = 0.15f;
+
+		if (reloadTime < -1.0f)
+			reloadTime = 1.0f;
+	}
+	reloadTime -= ELTime;
+	time -= ELTime;
 }

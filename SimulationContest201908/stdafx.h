@@ -42,6 +42,8 @@ extern float timeScale;
 
 #include "GameManager.h"
 
+#include "CharacterState.h"
+
 #include "Character.h"
 
 #include "Gun.h"

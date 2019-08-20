@@ -57,3 +57,13 @@ void Gun::GunAttack()
 {
 	animator->SetNowAnime("Attack");
 }
+
+Vector2 Gun::GetShootPos()
+{
+	Vector2 temp;
+
+	temp.x = pos.x + character->dirVector.x * mainTexture->info.Width * 0.5f;
+	temp.y = pos.y + character->dirVector.y * mainTexture->info.Width * 0.5f;
+
+	return temp;
+}

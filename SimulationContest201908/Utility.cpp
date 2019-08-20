@@ -59,3 +59,23 @@ bool CircleCollision(Vector2 p1, float r1, Vector2 p2, float r2)
 {
 	return (Vec2Distance(p1, p2) < r1 + r2);
 }
+
+bool WallCollision(Vector2 p1, Vector2 _size)
+{
+	auto back = OBJECTMANAGER->GetObjectList(GameObject::BACKGROUND2);
+
+	for (auto obj : *back)
+	{
+		Vector2 center, size;
+		center.x = obj->pos.x;
+		center.y = obj->pos.y - obj->mainTexture->info.Height * 0.25f;
+		size.x = obj->mainTexture->info.Width;
+		size.y = obj->mainTexture->info.Height * 0.5f;
+
+		if (RectCollision(Vector2(p1), _size, center, size))
+		{
+			return true;
+		}
+	}
+	return false;
+}

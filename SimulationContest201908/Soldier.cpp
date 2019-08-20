@@ -2,6 +2,7 @@
 #include "Soldier.h"
 
 #include "Gun.h"
+#include "Bullet.h"
 
 void Soldier::Init()
 {
@@ -15,25 +16,24 @@ void Soldier::Init()
 
 	animator->SetNowAnime("Idle");
 
-	stateFunc[IDLE] = &Character::CharacterStayIdle;
-	stateFunc[MOVE] = &Character::CharacterMove;
-	stateFunc[ATTACK] = &Character::CharacterAttack;
-	stateFunc[DIE] = &Character::CharacterDie;
+	ChangeState(new Character_Idle(this));
 
 	gun = new Gun(RESOURCEMANAGER->AddAnimeTexture("Character/gunner/effect/effect%d.png", 1, 7),
 		this);
 	OBJECTMANAGER->AddObject(GUN, gun);
 	gun->pivot = {0, -5};
 	gun->distance = 10.0f;
-	gun->animator->GetAnime("Attack")->animeSpeed = 50.0f;
+	gun->animator->GetAnime("Attack")->animeSpeed = 15.0f;
 	radius = 25.0f;
 	moveSpeed = 120.0f;
+
+	moveRadar = 250.0f;
+	attackRader = 200.0f;
 }
 
 void Soldier::Update()
 {
 	Character::Update();
-	(this->*stateFunc[state])();
 }
 
 void Soldier::Render()
@@ -49,10 +49,15 @@ void Soldier::CharacterAttack()
 {
 	animator->SetNowAnime("Idle");
 	
-	if (!targetObject || !CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRader))
+	if (static_cast<Character*>(targetObject)->hp < 0)
 	{
-		ChangeState(MOVE);
-		isDirectAttack = true;
+		ChangeState(new Character_Idle(this));
+		return;
+	}
+	if (!CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRader) && gun->animator->GetFrameEnd())
+	{
+		ChangeState(new Character_Move(true, this));
+		targetPos = Vector2(targetObject->pos);
 		return;
 	}
 
@@ -60,5 +65,16 @@ void Soldier::CharacterAttack()
 	D3DXVec2Normalize(&dir, &dir);
 	dirVector = dir;
 
-	gun->GunAttack();
+	if (gun->animator->GetFrameEnd())
+	{
+		gun->GunAttack();
+		Bullet* bullet = new Bullet(Bullet::SOLDIER, targetObject);
+		Vector2 temp = gun->GetShootPos();
+		bullet->pos.x = temp.x;
+		bullet->pos.y = temp.y;
+		if(tag == PLAYER)
+			OBJECTMANAGER->AddObject(PLAYER_BULLET, bullet);
+		else
+			OBJECTMANAGER->AddObject(ENEMY_BULLET, bullet);
+	}
 }

@@ -200,6 +200,9 @@
     <ClCompile Include="CharacterState.cpp">
       <Filter>GameObject\Character</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>GameObject\Bullet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="CharacterState.h">
       <Filter>GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>GameObject\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

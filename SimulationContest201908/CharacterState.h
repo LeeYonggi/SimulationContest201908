@@ -5,9 +5,7 @@ class Character_State
 {
 public:
 	Character_State(Character* _character)
-	{
-		character = _character;
-	}
+		: character(_character) { }
 	virtual ~Character_State() { }
 public:
 	string stateName;
@@ -24,18 +22,9 @@ class Character_Idle
 	: public Character_State
 {
 private:
-	bool isMoving = false;
 	float time = 0.0f;
 public:
-	Character_Idle(bool isMove, Character *_character)
-		: Character_State(_character)
-	{
-		isMoving = isMove;
-		character->animator->SetNowAnime("Idle");
-		stateName = "Idle";
-		if (isMoving)
-			time = RandomNumber(5, 10) * 0.1f;
-	}
+	Character_Idle(Character* _character);
 	virtual ~Character_Idle()
 	{
 
@@ -53,15 +42,10 @@ class Character_Move
 {
 private:
 	bool isDirectAttack = false;
+	float targetCircle = 10.0f;
 
 public:
-	Character_Move(bool _isDirectAttack, Character* _character)
-		: Character_State(_character)
-	{
-		isDirectAttack = _isDirectAttack;
-		character->animator->SetNowAnime("Move");
-		stateName = "Move";
-	}
+	Character_Move(bool _isDirectAttack, Character* _character);
 	virtual ~Character_Move()
 	{
 

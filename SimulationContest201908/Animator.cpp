@@ -18,6 +18,11 @@ void Animator::AddAnime(string animeName, Animation *anime)
 
 void Animator::SetNowAnime(string name)
 {
+	if (nowAnime == name && isEnd == true)
+	{
+		frame = 0.0f;
+		isEnd = false;
+	}
 	if (nowAnime == name) return;
 	nowAnime = name;
 	isEnd = false;

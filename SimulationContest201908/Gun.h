@@ -22,5 +22,6 @@ public:
 
 public:
 	void GunAttack();
+	Vector2 GetShootPos();
 };
 

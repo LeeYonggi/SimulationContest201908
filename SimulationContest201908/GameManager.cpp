@@ -10,8 +10,15 @@ void GameManager::Init()
 {
 	OBJECTMANAGER->AddObject(GameObject::BACKGROUND1, new Map());
 	
-	GameObject * obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Soldier());
-	obj->pos = {-200, -200, 0};
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			Vector2 pivot = { -500, -360 };
+			GameObject* obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Soldier());
+			obj->pos = { pivot.x + i * 60, pivot.y + j * 60, 0 };
+		}
+	}
 
 	OBJECTMANAGER->AddObject(GameObject::ENEMY, new Firebat());
 	OBJECTMANAGER->AddObject(GameObject::UI, new MouseControll());

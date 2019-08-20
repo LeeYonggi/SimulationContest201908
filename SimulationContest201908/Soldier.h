@@ -7,6 +7,7 @@ class Soldier :
 {
 public:
 	Gun* gun = nullptr;
+	float attackDelay = 0.5f;
 
 public:
 	virtual void Init() override;
