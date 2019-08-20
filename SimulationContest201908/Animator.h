@@ -29,6 +29,7 @@ public:
 	void AddAnime(string animeName, Animation *anime);
 	void SetNowAnime(string name);
 	Animation* GetNowAnime() { return animationMap[nowAnime]; }
+	Animation* GetAnime(string str) { return animationMap[str]; }
 	void Update();
 
 public:

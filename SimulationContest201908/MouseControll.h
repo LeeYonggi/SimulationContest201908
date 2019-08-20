@@ -19,5 +19,6 @@ public:
 public:
 	void SelectObject();
 	void MoveObject();
+	void CameraControll();
 };
 

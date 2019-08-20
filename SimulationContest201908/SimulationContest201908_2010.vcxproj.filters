@@ -66,6 +66,18 @@
     <Filter Include="GameObject\Map">
       <UniqueIdentifier>{c8772ad7-9672-4f6a-9ad0-7707d98ba123}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\GameManager">
+      <UniqueIdentifier>{36c80678-d3d0-4ef6-9609-fde90ae0f0a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Bullet">
+      <UniqueIdentifier>{46751160-876c-4ae5-b02b-f49dd39bd705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Firebat">
+      <UniqueIdentifier>{e8f87093-f920-499b-8526-cb70f48a139a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Building">
+      <UniqueIdentifier>{9e57803f-5cc1-4f9b-9b28-71ea8f2bec19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -176,6 +188,18 @@
     <ClCompile Include="Map.cpp">
       <Filter>GameObject\Map</Filter>
     </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Manager\GameManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Firebat.cpp">
+      <Filter>GameObject\Character\Firebat</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>GameObject\Building</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterState.cpp">
+      <Filter>GameObject\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -232,6 +256,18 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>GameObject\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Manager\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Firebat.h">
+      <Filter>GameObject\Character\Firebat</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>GameObject\Building</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterState.h">
+      <Filter>GameObject\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

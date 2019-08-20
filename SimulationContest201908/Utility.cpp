@@ -31,7 +31,7 @@ Vector2 WorldToScreen(Vector2 p1)
 	Vector2 screenSize = CAMERAMANAGER->screenSize;
 	
 	screenSize.x = screenSize.x / (float)SCREEN_X;
-	screenSize.y = screenSize.y / (float)SCREEN_X;
+	screenSize.y = screenSize.y / (float)SCREEN_Y;
 
 	temp.x += screenSize.x * (p1.x - SCREEN_X * 0.5f);
 	temp.y += screenSize.y * (SCREEN_Y * 0.5f -  p1.y);
@@ -44,4 +44,18 @@ float Vec2Distance(Vector2 p1, Vector2 p2)
 	float d = temp.x * temp.x + temp.y * temp.y;
 
 	return sqrt(d);
+}
+
+int RandomNumber(int low, int high)
+{
+	std::random_device rd; 
+	std::mt19937 mersenne(rd());
+	std::uniform_int_distribution<> die(low, high);
+
+	return die(mersenne);
+}
+
+bool CircleCollision(Vector2 p1, float r1, Vector2 p2, float r2)
+{
+	return (Vec2Distance(p1, p2) < r1 + r2);
 }

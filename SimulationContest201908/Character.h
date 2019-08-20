@@ -1,33 +1,28 @@
 #pragma once
 #include "GameObject.h"
 
+#include "CharacterState.h"
 
 class Character :
 	public GameObject
 {
-	using CharacterState = void(Character::*)(void);
 public:
 	Character();
 	virtual ~Character();
 
-public:
-	enum CHARACTER_STATE
-	{
-		IDLE,
-		MOVE,
-		DIE,
-		END
-	};
-
 protected:
-	Animator *animator = nullptr;
-	CHARACTER_STATE state = IDLE;
-	CharacterState stateFunc[CHARACTER_STATE::END];
+	Character_State *state = nullptr;
+	GameObject* targetObject = nullptr;
 
 public:
+	Animator *animator = nullptr;
 	Vector2 dirVector = { 1, 0 };
 	Vector2 targetPos = { 0, 0 };
 	float moveSpeed = 100.0f;
+	float moveRadar = 100.0f;
+	float attackRader = 80.0f;
+	bool isDirectAttack = false;
+	float characterTime = 0.0f;
 
 public:
 	// GameObject을(를) 통해 상속됨
@@ -37,10 +32,15 @@ public:
 	virtual void Release();
 
 public:
-	void ChangeState(CHARACTER_STATE _state) { state = _state; }
+	void ChangeState(Character_State *_state)
+	{ 
+		SAFE_DELETE(state);
+		state = _state; 
+	}
 
 public:
-	void CharacterStayIdle();
-	void CharacterMove();
-	void CharacterDie();
+	virtual void CharacterAttack() = 0;
+	void CharacterCollision();
+	GameObject* IsCharacterRader(float radar);
 };
+

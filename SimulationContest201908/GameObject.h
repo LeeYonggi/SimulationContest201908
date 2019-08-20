@@ -34,6 +34,8 @@ public:
 	bool destroy = false;
 	Texture* mainTexture = nullptr;
 	Color color = {1, 1, 1, 1};
+	pair<bool, bool> flip = make_pair(false, false);
+	float radius = 5.0f;
 
 };
 

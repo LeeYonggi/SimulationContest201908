@@ -22,6 +22,20 @@ void RenderManager::Init()
 	vertex.push_back(TexVertex({ -size, size, 0 },	{ 0, 0 }));
 	vertex.push_back(TexVertex({ size, size, 0 },	{ 1, 0 }));
 
+	xFlipvertex.push_back(TexVertex({ size, size, 0 }, { 0, 0 }));
+	xFlipvertex.push_back(TexVertex({ size, -size, 0 }, { 0, 1 }));
+	xFlipvertex.push_back(TexVertex({ -size, -size, 0 }, { 1, 1 }));
+	xFlipvertex.push_back(TexVertex({ -size, -size, 0 }, { 1, 1 }));
+	xFlipvertex.push_back(TexVertex({ -size, size, 0 }, { 1, 0 }));
+	xFlipvertex.push_back(TexVertex({ size, size, 0 }, { 0, 0 }));
+
+	yFlipvertex.push_back(TexVertex({ size, size, 0 }, { 1, 1 }));
+	yFlipvertex.push_back(TexVertex({ size, -size, 0 }, { 1, 0 }));
+	yFlipvertex.push_back(TexVertex({ -size, -size, 0 }, { 0, 0 }));
+	yFlipvertex.push_back(TexVertex({ -size, -size, 0 }, { 0, 0 }));
+	yFlipvertex.push_back(TexVertex({ -size, size, 0 }, { 0, 1 }));
+	yFlipvertex.push_back(TexVertex({ size, size, 0 }, { 1, 1 }));
+
 	D3DXCreateSprite(DEVICE, &sprite);
 }
 
@@ -30,7 +44,7 @@ void RenderManager::Release()
 	SAFE_RELEASE(sprite);
 }
 
-void RenderManager::DrawImage(Texture* texture, Vector3 pos, Vector2 scale, float rotate, Color color)
+void RenderManager::DrawImage(Texture* texture, Vector3 pos, Vector2 scale, float rotate, Color color, pair<bool, bool> flip)
 {
 	Matrix matW, matS, matR, matT;
 
@@ -42,7 +56,12 @@ void RenderManager::DrawImage(Texture* texture, Vector3 pos, Vector2 scale, floa
 
 	DEVICE->SetTransform(D3DTS_WORLD, &matW);
 
-	DEVICE->SetRenderState(D3DRS_ZWRITEENABLE, false);
+	DEVICE->SetRenderState(D3DRS_TEXTUREFACTOR, color);
+	DEVICE->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TFACTOR);
+	DEVICE->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_TEXTURE);
+	DEVICE->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
+
+	DEVICE->SetRenderState(D3DRS_ZWRITEENABLE, true);
 	DEVICE->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	DEVICE->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 	DEVICE->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
@@ -57,12 +76,34 @@ void RenderManager::DrawImage(Texture* texture, Vector3 pos, Vector2 scale, floa
 
 	DEVICE->SetTexture(0, texture->tex);
 
-	DEVICE->DrawPrimitiveUP(
-		D3DPT_TRIANGLELIST,
-		vertex.size() / 3,
-		&vertex[0],
-		sizeof(TexVertex)
-	);
+	if (flip.first)
+	{
+		DEVICE->DrawPrimitiveUP(
+			D3DPT_TRIANGLELIST,
+			xFlipvertex.size() / 3,
+			&xFlipvertex[0],
+			sizeof(TexVertex)
+		);
+	}
+	else if (flip.second)
+	{
+		DEVICE->DrawPrimitiveUP(
+			D3DPT_TRIANGLELIST,
+			yFlipvertex.size() / 3,
+			&yFlipvertex[0],
+			sizeof(TexVertex)
+		);
+	}
+	else
+	{
+		DEVICE->DrawPrimitiveUP(
+			D3DPT_TRIANGLELIST,
+			vertex.size() / 3,
+			&vertex[0],
+			sizeof(TexVertex)
+		);
+	}
+
 	DEVICE->SetTexture(0, nullptr);
 }
 

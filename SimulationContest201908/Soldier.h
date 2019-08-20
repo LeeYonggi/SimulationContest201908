@@ -13,5 +13,8 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void Release() override;
+
+	// Character을(를) 통해 상속됨
+	virtual void CharacterAttack() override;
 };
 

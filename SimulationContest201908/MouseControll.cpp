@@ -1,6 +1,8 @@
 #include "DXUT.h"
 #include "MouseControll.h"
 
+#include "Map.h"
+
 void MouseControll::Init()
 {
 }
@@ -27,6 +29,7 @@ void MouseControll::Update()
 	{
 		MoveObject();
 	}
+	CameraControll();
 	pos.z = -1;
 }
 
@@ -70,5 +73,39 @@ void MouseControll::MoveObject()
 	{
 		iter->ChangeState(Character::MOVE);
 		iter->targetPos = mouse;
+		iter->isDirectAttack = false;
+	}
+}
+
+void MouseControll::CameraControll()
+{
+	Vector2 mouse = INPUTMANAGER->GetMouse();
+	Texture* background = Map::nowMap->mainTexture;
+	constexpr float speed = 4.0f;
+
+	if (mouse.x < 10.0f && CAMERAMANAGER->pos.x > (CAMERAMANAGER->screenSize.x - background->info.Width) * 0.5f)
+	{
+		CAMERAMANAGER->pos.x -= speed;
+	}
+	if (mouse.x > SCREEN_X - 10 && CAMERAMANAGER->pos.x < (background->info.Width - CAMERAMANAGER->screenSize.x) * 0.5f)
+	{
+		CAMERAMANAGER->pos.x += speed;
+	}
+	if (mouse.y < 10.0f && CAMERAMANAGER->pos.y < (background->info.Height - CAMERAMANAGER->screenSize.y) * 0.5f)
+	{
+		CAMERAMANAGER->pos.y += speed;
+	}
+	if (mouse.y > SCREEN_Y - 10 && CAMERAMANAGER->pos.y > (CAMERAMANAGER->screenSize.y - background->info.Height) * 0.5f)
+	{
+		CAMERAMANAGER->pos.y -= speed;
+	}
+
+	if (mouse.x < 0 || mouse.x > SCREEN_X ||
+		mouse.y < 0 || mouse.y > SCREEN_Y)
+	{
+		POINT temp = { max(0, min(mouse.x, SCREEN_X)), max(0, min(mouse.y, SCREEN_Y)) };
+		
+		ClientToScreen(DXUTGetHWND(), &temp);
+		SetCursorPos(temp.x, temp.y);
 	}
 }

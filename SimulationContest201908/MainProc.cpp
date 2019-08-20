@@ -34,4 +34,5 @@ void MainProc::Release()
 	SceneManager::ReleaseInstance();
 	ResourceManager::ReleaseInstance();
 	InputManager::ReleaseInstance();
+	GameManager::ReleaseInstance();
 }

@@ -1,21 +1,20 @@
 #include "DXUT.h"
 #include "IngameScene.h"
 
-#include "Soldier.h"
-#include "MouseControll.h"
 
 void IngameScene::Init()
 {
-	OBJECTMANAGER->AddObject(GameObject::PLAYER, new Soldier());
-	OBJECTMANAGER->AddObject(GameObject::UI, new MouseControll());
+	GAMEMANAGER->Init();
 }
 
 void IngameScene::Update()
 {
+	GAMEMANAGER->Update();
 }
 
 void IngameScene::Render()
 {
+	GAMEMANAGER->Render();
 }
 
 void IngameScene::Release()

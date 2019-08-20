@@ -21,6 +21,6 @@ public:
 	virtual void Release() override;
 
 public:
-	
+	void GunAttack();
 };
 

@@ -22,6 +22,7 @@ Gun::Gun(vector<Texture*> anime, Character* _character)
 
 Gun::~Gun()
 {
+	SAFE_DELETE(animator);
 }
 
 void Gun::Init()
@@ -35,15 +36,24 @@ void Gun::Update()
 	pos.x = pivot.x + character->pos.x + character->dirVector.x * distance;
 	pos.y = pivot.y + character->pos.y + character->dirVector.y * distance;
 	pos.z = 0;
+	if (character->dirVector.x < 0)
+		flip.second = true;
+	else
+		flip.second = false;
 
 	animator->Update();
 }
 
 void Gun::Render()
 {
-	RENDERMANAGER->DrawImage(mainTexture, pos, scale, rotate, color);
+	RENDERMANAGER->DrawImage(mainTexture, pos, scale, rotate, color, flip);
 }
 
 void Gun::Release()
 {
+}
+
+void Gun::GunAttack()
+{
+	animator->SetNowAnime("Attack");
 }
