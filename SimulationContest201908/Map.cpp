@@ -7,16 +7,14 @@ Map *Map::nowMap = nullptr;
 
 Map::Map()
 {
-	if (!nowMap)
+	if (nowMap == nullptr)
 		nowMap = this;
-	else
-	{
-		destroy = true;
-	}
 }
 
 Map::~Map()
 {
+	if (nowMap == this)
+		nowMap = nullptr;
 }
 
 void Map::Init()

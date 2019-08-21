@@ -4,16 +4,28 @@
 ObjectManager::ObjectManager()
 {
 	Init();
+
+	darkTexture = RESOURCEMANAGER->AddTexture("Light/dark.png");
+
+	CreateRenderTarget(lightMapTexture, lightMapSurface);
+	CreateRenderTarget(darkMapTexture, darkMapSurface);
+
+	lightShader = RESOURCEMANAGER->CreateShader("Shader/mask.fx");
 }
 
 ObjectManager::~ObjectManager()
 {
 	Release();
+
+	SAFE_RELEASE(lightMapTexture);
+	SAFE_RELEASE(darkMapTexture);
+	SAFE_RELEASE(lightMapSurface);
+	SAFE_RELEASE(darkMapSurface);
 }
 
 void ObjectManager::Init()
 {
-	for (int i = 0; i <= GameObject::GAMEOBJECT_TAG::UI; i++)
+	for (int i = 0; i <= GameObject::GAMEOBJECT_TAG::END; i++)
 		objectMap.insert(make_pair((GameObject::GAMEOBJECT_TAG)i, list<GameObject*>()));
 }
 
@@ -57,7 +69,21 @@ void ObjectManager::Render()
 {
 	sortList.sort(objSort);
 
+	list<GameObject*> uiList;
 	for (auto iter : sortList)
+	{
+		if (iter->pos.z < -10)
+		{
+			uiList.push_back(iter);
+			continue;
+		}
+		if (iter->active)
+			iter->Render();
+	}
+
+	LightingMapRender();
+
+	for (auto iter : uiList)
 	{
 		if (iter->active)
 			iter->Render();
@@ -76,6 +102,56 @@ void ObjectManager::Release()
 		iter.second.clear();
 	}
 	objectMap.clear();
+}
+
+void ObjectManager::LightingMapRender()
+{
+	LPDIRECT3DSURFACE9 backBufferSurface = nullptr;
+
+	DEVICE->GetRenderTarget(0, &backBufferSurface);
+
+	DEVICE->SetRenderTarget(0, lightMapSurface);
+
+	DEVICE->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+		D3DCOLOR_ARGB(0, 0, 0, 0), 1, 0);
+
+	DrawTagObject(GameObject::PLAYER);
+	DrawTagObject(GameObject::PLAYER_BULLET);
+	DrawTagObject(GameObject::ENEMY_BULLET);
+	
+	DEVICE->SetRenderTarget(0, darkMapSurface);
+
+	DEVICE->Clear(0, nullptr, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+		D3DCOLOR_ARGB(0, 0, 0, 0), 1, 0);
+
+	RENDERMANAGER->DrawSprite(darkTexture, { (float)SCREEN_X * 0.5f, (float)SCREEN_Y * 0.5f },
+		{1, 1}, 0, Color(1, 1, 1, 0.6f));
+
+	DEVICE->SetRenderTarget(0, backBufferSurface);
+
+	SAFE_RELEASE(backBufferSurface);
+
+	RENDERMANAGER->DrawLightShader(lightShader, lightMapTexture, darkMapTexture);
+}
+
+void ObjectManager::CreateRenderTarget(LPDIRECT3DTEXTURE9& rtTex, LPDIRECT3DSURFACE9& rtSurf)
+{
+	DEVICE->CreateTexture(SCREEN_X, SCREEN_Y, 
+		1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8,
+		D3DPOOL_DEFAULT, &rtTex, 0);
+
+	rtTex->GetSurfaceLevel(0, &rtSurf);
+}
+
+void ObjectManager::DrawTagObject(GameObject::GAMEOBJECT_TAG tag)
+{
+	auto iter = GetObjectList(tag);
+
+	for (auto obj : *iter)
+	{
+		Texture* light = obj->lightTexture;
+		RENDERMANAGER->DrawImage(light, obj->pos);
+	}
 }
 
 list<GameObject*> *ObjectManager::GetObjectList(GameObject::GAMEOBJECT_TAG tag)

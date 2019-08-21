@@ -12,9 +12,26 @@ public:
 	void Render();
 	void Release();
 
+public:
+	void LightingMapRender();
+
 private:
 	map<GameObject::GAMEOBJECT_TAG, list<GameObject*>> objectMap;
 	list<GameObject*> sortList;
+
+private:
+	Texture* darkTexture = nullptr;
+	LPDIRECT3DSURFACE9 lightMapSurface = nullptr;
+	LPDIRECT3DTEXTURE9 lightMapTexture = nullptr;
+
+	LPDIRECT3DSURFACE9 darkMapSurface = nullptr;
+	LPDIRECT3DTEXTURE9 darkMapTexture = nullptr;
+
+	LPD3DXEFFECT lightShader = nullptr;
+
+private:
+	void CreateRenderTarget(LPDIRECT3DTEXTURE9 &rtTex, LPDIRECT3DSURFACE9 &rtSurf);
+	void DrawTagObject(GameObject::GAMEOBJECT_TAG tag);
 
 public:
 	list<GameObject*> *GetObjectList(GameObject::GAMEOBJECT_TAG tag);

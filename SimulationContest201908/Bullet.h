@@ -15,6 +15,7 @@ public:
 	Bullet(BULLET_STATE state, GameObject *target);
 	virtual ~Bullet();
 
+
 private:
 	BULLET_STATE bulletState;
 	GameObject* targetObj;

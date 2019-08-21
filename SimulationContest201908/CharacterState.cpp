@@ -22,8 +22,8 @@ void Character_Idle::Update()
 		if (time < 0.0f)
 		{
 			Vector2 temp;
-			temp.x = RandomNumber(-50, 50);
-			temp.y = RandomNumber(-50, 50);
+			temp.x = character->pos.x + RandomNumber(-50, 50);
+			temp.y = character->pos.y + RandomNumber(-50, 50);
 			character->targetPos = temp;
 			character->ChangeState(new Character_Move(true, character));
 			return;

@@ -2,6 +2,16 @@
 #include "MouseControll.h"
 
 #include "Map.h"
+#include "Character.h"
+
+
+MouseControll::MouseControll()
+{
+}
+
+MouseControll::~MouseControll()
+{
+}
 
 void MouseControll::Init()
 {
@@ -30,7 +40,7 @@ void MouseControll::Update()
 		MoveObject();
 	}
 	CameraControll();
-	pos.z = -1;
+	pos.z = -10;
 }
 
 void MouseControll::Render()
@@ -61,6 +71,7 @@ void MouseControll::SelectObject()
 		if (RectCollision(Vector2(obj->pos), {2, 2}, center, size))
 		{
 			selectList.push_back(static_cast<Character*>(obj));
+			static_cast<Character*>(obj)->isSelect = true;
 		}
 	}
 }
@@ -107,4 +118,9 @@ void MouseControll::CameraControll()
 		ClientToScreen(DXUTGetHWND(), &temp);
 		SetCursorPos(temp.x, temp.y);
 	}
+}
+
+void MouseControll::RemoveSelectObject(Character* character)
+{
+	selectList.remove(character);
 }

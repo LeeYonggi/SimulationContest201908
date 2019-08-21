@@ -24,7 +24,7 @@ void Soldier::Init()
 	gun->pivot = {0, -5};
 	gun->distance = 10.0f;
 	gun->animator->GetAnime("Attack")->animeSpeed = 15.0f;
-	radius = 25.0f;
+	radius = 20.0f;
 	moveSpeed = 120.0f;
 
 	moveRadar = 250.0f;
@@ -34,6 +34,11 @@ void Soldier::Init()
 void Soldier::Update()
 {
 	Character::Update();
+	if (gun && hp < 0)
+	{
+		gun->destroy = true;
+		gun = nullptr;
+	}
 }
 
 void Soldier::Render()

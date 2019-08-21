@@ -1,9 +1,12 @@
 #include "DXUT.h"
 #include "Character.h"
 
+#include "MouseControll.h"
+
 Character::Character()
 {
 	animator = new Animator(this);
+	lightTexture = RESOURCEMANAGER->AddTexture("Light/light.png");
 }
 
 Character::~Character()
@@ -36,7 +39,14 @@ void Character::Update()
 		color = { 1, 1, 1, 1 };
 
 	if (hp < 0)
+	{
 		ChangeState(new Character_Die(this));
+		if (isSelect)
+		{
+			auto iter = *OBJECTMANAGER->GetObjectList(GAMEOBJECT_TAG::MOUSE_CONTROLL);
+			static_cast<MouseControll*>((*iter.begin()))->RemoveSelectObject(this);
+		}
+	}
 }
 
 void Character::Render()

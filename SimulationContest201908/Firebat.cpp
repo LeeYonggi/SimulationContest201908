@@ -43,6 +43,11 @@ void Firebat::Init()
 void Firebat::Update()
 {
 	Character::Update();
+	if (gun && hp < 0)
+	{
+		gun->destroy = true;
+		gun = nullptr;
+	}
 }
 
 void Firebat::Render()

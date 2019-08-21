@@ -150,3 +150,28 @@ void RenderManager::DrawLine(Vector2 p1, Vector2 p2, float width, Color color)
 	line->End();
 	line->Release();
 }
+
+void RenderManager::DrawLightShader(LPD3DXEFFECT shader, LPDIRECT3DTEXTURE9 lightMapTexture, LPDIRECT3DTEXTURE9 darkMapTexture)
+{
+	shader->SetTexture((D3DXHANDLE)"g_lightMapTex", lightMapTexture);
+	shader->SetTexture((D3DXHANDLE)"g_darkMapTex", darkMapTexture);
+
+	UINT numPasses = 0;
+	shader->Begin(&numPasses, 0);
+	for (UINT i = 0; i < numPasses; ++i)
+	{
+		Matrix matW;
+		D3DXMatrixTranslation(&matW, SCREEN_X * 0.5f, SCREEN_Y * 0.5f, 0);
+		sprite->SetTransform(&matW);
+		sprite->Begin(D3DXSPRITE_ALPHABLEND);
+
+		shader->BeginPass(i);
+		Vector3 center = { SCREEN_X * 0.5f, SCREEN_Y * 0.5f, 0 };
+		sprite->Draw(lightMapTexture, nullptr, &center, nullptr, Color(1, 1, 1, 1));
+
+		shader->EndPass();
+
+		sprite->End();
+	}
+	shader->End();
+}

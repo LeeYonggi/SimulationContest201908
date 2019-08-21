@@ -19,11 +19,18 @@ void GameManager::Init()
 			obj->pos = { pivot.x + i * 60, pivot.y + j * 60, 0 };
 		}
 	}
-
-	OBJECTMANAGER->AddObject(GameObject::ENEMY, new Firebat());
-	OBJECTMANAGER->AddObject(GameObject::UI, new MouseControll());
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			Vector2 pivot = { -100, 210 };
+			GameObject *obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Firebat());
+			obj->pos = { pivot.x + i * 60, pivot.y + j * 60, 0 };
+		}
+	}
+	OBJECTMANAGER->AddObject(GameObject::MOUSE_CONTROLL, new MouseControll());
 	CAMERAMANAGER->pos = {-320, -320, -10};
-	//CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, {960, 540});
+	CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, {960, 540});
 }
 
 void GameManager::Update()

@@ -3,11 +3,17 @@
 class MouseControll :
 	public GameObject
 {
+public:
+	MouseControll();
+	virtual ~MouseControll();
+public:
+
 private:
 	Vector2 firstPos = { 0, 0 };
 	Vector2 endPos = { 0, 0 };
 	bool isPress = false;
-	vector<Character*> selectList;
+	list<Character*> selectList;
+	
 
 public:
 	// GameObject을(를) 통해 상속됨
@@ -20,5 +26,7 @@ public:
 	void SelectObject();
 	void MoveObject();
 	void CameraControll();
+public:
+	void RemoveSelectObject(Character* character);
 };
 

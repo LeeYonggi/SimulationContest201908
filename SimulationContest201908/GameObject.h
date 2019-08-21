@@ -22,7 +22,9 @@ public:
 		PLAYER_BULLET,
 		ENEMY_BULLET,
 		EFFECT,
-		UI
+		UI,
+		MOUSE_CONTROLL,
+		END
 	};
 
 public:
@@ -36,6 +38,7 @@ public:
 	Color color = {1, 1, 1, 1};
 	pair<bool, bool> flip = make_pair(false, false);
 	float radius = 5.0f;
+	Texture* lightTexture = nullptr;
 
 };
 

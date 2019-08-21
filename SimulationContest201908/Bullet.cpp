@@ -29,6 +29,7 @@ void Bullet::Init()
 
 		damage = 10;
 
+		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
 		break;
 	case Bullet::FIREBAT:
 		mainTexture = RESOURCEMANAGER->AddTexture("Character/firebat/weapon/fire.png");
@@ -46,9 +47,11 @@ void Bullet::Init()
 
 		radius = 5.0f;
 
-		damage = 1;
+		damage = 2;
 
 		growFire = RandomNumber(10, 30) * 0.02f;
+
+		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
 		break;
 	case Bullet::TANK:
 		break;
@@ -117,7 +120,7 @@ void Bullet::BulletCollision(bool isDestroy)
 			character->CharacterAttacked(damage);
 			if (isDestroy)
 				destroy = true;
-			fireHitTime = 0.4f;
+			fireHitTime = 0.1f;
 		}
 	}
 }

@@ -16,6 +16,7 @@ public:
 
 private:
 	map<string, Texture*> textureMap;
+	map<string, LPD3DXEFFECT> shaderMap;
 
 public:
 	void Init();
@@ -25,6 +26,7 @@ public:
 public:
 	Texture* AddTexture(string path);
 	vector<Texture*> AddAnimeTexture(string path, int low, int high);
+	LPD3DXEFFECT CreateShader(string path);
 };
 
 #define RESOURCEMANAGER ResourceManager::GetInstance()
