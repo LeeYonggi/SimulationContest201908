@@ -16,8 +16,8 @@ bool CALLBACK IsD3D9DeviceAcceptable( D3DCAPS9* pCaps, D3DFORMAT AdapterFormat, 
                                       bool bWindowed, void* pUserContext )
 {
     // Typically want to skip back buffer formats that don't support alpha blending
-    IDirect3D9* pD3D = DXUTGetD3D9Object();
-    if( FAILED( pD3D->CheckDeviceFormat( pCaps->AdapterOrdinal, pCaps->DeviceType,
+    IDirect3D9* pD3D9 = DXUTGetD3D9Object();
+    if( FAILED( pD3D9->CheckDeviceFormat( pCaps->AdapterOrdinal, pCaps->DeviceType,
                                          AdapterFormat, D3DUSAGE_QUERY_POSTPIXELSHADER_BLENDING,
                                          D3DRTYPE_TEXTURE, BackBufferFormat ) ) )
         return false;
@@ -75,8 +75,10 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
 {
     HRESULT hr;
 
+	constexpr int renderFlag = D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER;
+
     // Clear the render target and the zbuffer 
-    V( pd3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB( 0, 0, 0, 0 ), 1.0f, 0 ) );
+    V( pd3dDevice->Clear( 0, NULL, renderFlag, D3DCOLOR_ARGB( 0, 0, 0, 0 ), 1.0f, 0 ) );
 
     // Render the scene
     if( SUCCEEDED( pd3dDevice->BeginScene() ) )
@@ -122,6 +124,10 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
     // Enable run-time memory check for debug builds.
 #if defined(DEBUG) | defined(_DEBUG)
     _CrtSetDbgFlag( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
+
+	AllocConsole();
+
+	freopen("CONOUT$", "w", stdout);
 #endif
 
     // Set the callback functions
@@ -135,7 +141,7 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
     DXUTSetCallbackMsgProc( MsgProc );
     DXUTSetCallbackFrameMove( OnFrameMove );
 
-    // TODO: Perform any application-level initialization here
+    // TodO: PErfoRm aNY apPliCAtiOn-level iNItiALizZtiON hERo
 
     // Initialize DXUT and create the desired Win32 window and Direct3D device for the application
     DXUTInit( true, true ); // Parse the command line and show msgboxes
@@ -148,6 +154,10 @@ INT WINAPI wWinMain( HINSTANCE, HINSTANCE, LPWSTR, int )
     DXUTMainLoop();
 
     // TODO: Perform any application-level cleanup here
+
+#if defined(DEBUG) | defined(_DEBUG)
+	FreeConsole();
+#endif
 
     return DXUTGetExitCode();
 }

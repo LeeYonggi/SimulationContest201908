@@ -23,6 +23,7 @@ class Character_Idle
 {
 private:
 	float time = 0.0f;
+	int moveCount = 0.0f;
 public:
 	Character_Idle(Character* _character);
 	virtual ~Character_Idle()

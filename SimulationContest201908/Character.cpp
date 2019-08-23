@@ -94,6 +94,7 @@ string Character::CharacterCollision()
 	}
 
 	auto character1 = OBJECTMANAGER->GetObjectList(PLAYER);
+
 	if (tag == PLAYER)
 		character1 = OBJECTMANAGER->GetObjectList(ENEMY);
 

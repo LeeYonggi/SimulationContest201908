@@ -24,6 +24,18 @@ void Character_Idle::Update()
 			Vector2 temp;
 			temp.x = character->pos.x + RandomNumber(-50, 50);
 			temp.y = character->pos.y + RandomNumber(-50, 50);
+			if (WallCollision(Vector2(temp), Vector2(20, 20)))
+			{
+				moveCount += 1;
+				if (moveCount > 50)
+				{
+					character->isMoveIdle = false;
+					character->ChangeState(new Character_Idle(character));
+					return;
+				}
+				Update();
+				return;
+			}
 			character->targetPos = temp;
 			character->ChangeState(new Character_Move(true, character));
 			return;

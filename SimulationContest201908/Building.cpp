@@ -41,9 +41,7 @@ bool Building::CharacterCollisionCheck(list<GameObject*>* objList)
 	size.x = mainTexture->info.Width;
 	size.y = mainTexture->info.Height;
 
-	auto iter = OBJECTMANAGER->GetObjectList(PLAYER);
-
-	for (auto obj : *iter)
+	for (auto obj : *objList)
 	{
 		Vector2 temp;
 		temp.x = obj->mainTexture->info.Width;
