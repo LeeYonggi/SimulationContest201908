@@ -39,6 +39,7 @@ public:
 	pair<bool, bool> flip = make_pair(false, false);
 	float radius = 5.0f;
 	Texture* lightTexture = nullptr;
+	bool renderActive = true;
 
 };
 

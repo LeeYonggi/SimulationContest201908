@@ -47,10 +47,16 @@ void Character::Update()
 			static_cast<MouseControll*>((*iter.begin()))->RemoveSelectObject(this);
 		}
 	}
+
+	if (tag == ENEMY)
+		renderActive = ForgCheck();
 }
 
 void Character::Render()
 {
+	if (isSelect)
+		RENDERMANAGER->DrawImage(RESOURCEMANAGER->AddTexture("Character/CharacterTarget.png"), 
+			Vector3(pos.x, pos.y - mainTexture->info.Height * 0.5f, pos.z), scale);
 }
 
 void Character::Release()
@@ -128,6 +134,7 @@ string Character::CharacterCollision()
 			str = "CollisionStack";
 		}
 	}
+
 	return str;
 }
 
@@ -146,6 +153,22 @@ GameObject* Character::IsCharacterRader(float radar)
 		}
 	}
 	return nullptr;
+}
+
+bool Character::ForgCheck()
+{
+	auto iter = OBJECTMANAGER->GetObjectList(PLAYER);
+
+	for (auto obj : *iter)
+	{
+		Character* character = static_cast<Character*>(obj);
+
+		if (CircleCollision(Vector2(character->pos), character->moveRadar, Vector2(pos), radius))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void Character::CharacterAttacked(int damage)

@@ -77,17 +77,18 @@ void ObjectManager::Render()
 			uiList.push_back(iter);
 			continue;
 		}
-		if (iter->active)
+		if (iter->active && iter->renderActive)
 			iter->Render();
 	}
 
-	LightingMapRender();
+	LightingMapRender(0.9);
 
 	for (auto iter : uiList)
 	{
-		if (iter->active)
+		if (iter->active && iter->renderActive)
 			iter->Render();
 	}
+	uiList.clear();
 }
 
 void ObjectManager::Release()
@@ -104,7 +105,7 @@ void ObjectManager::Release()
 	objectMap.clear();
 }
 
-void ObjectManager::LightingMapRender()
+void ObjectManager::LightingMapRender(float alpha)
 {
 	LPDIRECT3DSURFACE9 backBufferSurface = nullptr;
 
@@ -125,7 +126,7 @@ void ObjectManager::LightingMapRender()
 		D3DCOLOR_ARGB(0, 0, 0, 0), 1, 0);
 
 	RENDERMANAGER->DrawSprite(darkTexture, { (float)SCREEN_X * 0.5f, (float)SCREEN_Y * 0.5f },
-		{1, 1}, 0, Color(1, 1, 1, 0.6f));
+		{1, 1}, 0, Color(1, 1, 1, alpha));
 
 	DEVICE->SetRenderTarget(0, backBufferSurface);
 
@@ -150,7 +151,7 @@ void ObjectManager::DrawTagObject(GameObject::GAMEOBJECT_TAG tag)
 	for (auto obj : *iter)
 	{
 		Texture* light = obj->lightTexture;
-		RENDERMANAGER->DrawImage(light, obj->pos);
+		RENDERMANAGER->DrawImage(light, obj->pos, {3, 3});
 	}
 }
 

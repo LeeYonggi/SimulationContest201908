@@ -15,6 +15,7 @@ MouseControll::~MouseControll()
 
 void MouseControll::Init()
 {
+	pos.z = -11;
 }
 
 void MouseControll::Update()
@@ -40,7 +41,6 @@ void MouseControll::Update()
 		MoveObject();
 	}
 	CameraControll();
-	pos.z = -10;
 }
 
 void MouseControll::Render()
@@ -72,6 +72,10 @@ void MouseControll::SelectObject()
 		{
 			selectList.push_back(static_cast<Character*>(obj));
 			static_cast<Character*>(obj)->isSelect = true;
+		}
+		else
+		{
+			static_cast<Character*>(obj)->isSelect = false;
 		}
 	}
 }

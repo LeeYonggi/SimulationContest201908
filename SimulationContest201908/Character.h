@@ -50,6 +50,7 @@ public:
 	virtual void CharacterAttack() = 0;
 	string CharacterCollision();
 	GameObject* IsCharacterRader(float radar);
+	bool ForgCheck();
 	void CharacterAttacked(int damage);
 };
 

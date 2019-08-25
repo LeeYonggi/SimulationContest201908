@@ -27,8 +27,8 @@ void Soldier::Init()
 	radius = 20.0f;
 	moveSpeed = 120.0f;
 
-	moveRadar = 250.0f;
-	attackRader = 200.0f;
+	moveRadar = 200.0f;
+	attackRader = 150.0f;
 }
 
 void Soldier::Update()
@@ -43,6 +43,7 @@ void Soldier::Update()
 
 void Soldier::Render()
 {
+	Character::Render();
 	RENDERMANAGER->DrawImage(mainTexture, pos, scale, rotate, color, flip);
 }
 

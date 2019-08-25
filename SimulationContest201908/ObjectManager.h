@@ -13,7 +13,7 @@ public:
 	void Release();
 
 public:
-	void LightingMapRender();
+	void LightingMapRender(float alpha);
 
 private:
 	map<GameObject::GAMEOBJECT_TAG, list<GameObject*>> objectMap;

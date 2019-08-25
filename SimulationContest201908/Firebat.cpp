@@ -43,6 +43,10 @@ void Firebat::Init()
 void Firebat::Update()
 {
 	Character::Update();
+	if (renderActive == false && gun)
+		gun->renderActive = false;
+	else if(renderActive == true && gun)
+		gun->renderActive = true;
 	if (gun && hp < 0)
 	{
 		gun->destroy = true;
@@ -52,6 +56,7 @@ void Firebat::Update()
 
 void Firebat::Render()
 {
+	Character::Render();
 	RENDERMANAGER->DrawImage(mainTexture, pos, scale, rotate, color, flip);
 }
 
@@ -62,7 +67,7 @@ void Firebat::Release()
 void Firebat::CharacterAttack()
 {
 	animator->SetNowAnime("Idle");
-	if (!targetObject)
+	if (static_cast<Character*>(targetObject)->hp < 0)
 	{
 		ChangeState(new Character_Idle(this));
 		return;
