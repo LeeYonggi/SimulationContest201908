@@ -32,6 +32,7 @@ void Gun::Init()
 void Gun::Update()
 {
 	rotate = atan2f(character->dirVector.y, character->dirVector.x);
+	//cout << atan2f(-1, -1) << endl;
 
 	pos.x = pivot.x + character->pos.x + character->dirVector.x * distance;
 	pos.y = pivot.y + character->pos.y + character->dirVector.y * distance;

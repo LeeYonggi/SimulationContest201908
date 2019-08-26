@@ -30,6 +30,8 @@ public:
 	void SetNowAnime(string name);
 	Animation* GetNowAnime() { return animationMap[nowAnime]; }
 	Animation* GetAnime(string str) { return animationMap[str]; }
+	string GetNowAnimeName() { return nowAnime; }
+	float GetNowFrame() { return frame; }
 	void Update();
 
 public:

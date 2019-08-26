@@ -54,6 +54,35 @@ void Bullet::Init()
 		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
 		break;
 	case Bullet::TANK:
+		mainTexture = RESOURCEMANAGER->AddTexture("Character/tank/tank_bullet.png");
+
+		damage = 25;
+
+		radius = 5.0f;
+
+		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
+		bulletSpeed = 400;
+
+		startVector = Vector2(pos);
+		targetVector = Vector2(targetObj->pos);
+
+		endheight = targetVector.y - startVector.y;
+		height = 50 - startVector.y;
+		velocity = 2 * height / (maxTime * maxTime);
+		speed.y = sqrt(2 * velocity * height);
+
+		{
+			float a = velocity;
+			float b = -2 * speed.y;
+			float c = 2 * endheight;
+
+			endTime = (-b + sqrt(b * b - 4 * a * c)) / (2 * a);
+
+			speed.x = -(startVector.x - targetVector.x) / endTime;
+		}
+
+
+
 		break;
 	default:
 		break;
@@ -69,6 +98,11 @@ void Bullet::Update()
 			destroy = true;
 
 		BulletCollision(true);
+		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
+
+		pos.x += moveVector.x * ELTime * bulletSpeed;
+		pos.y += moveVector.y * ELTime * bulletSpeed;
+		time += ELTime;
 		break;
 	case Bullet::FIREBAT:
 		if (time > 1.2f)
@@ -81,24 +115,30 @@ void Bullet::Update()
 		scale.y += growFire * ELTime;
 
 		fireHitTime -= ELTime;
+		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
 
+		pos.x += moveVector.x * ELTime * bulletSpeed;
+		pos.y += moveVector.y * ELTime * bulletSpeed;
+		time += ELTime;
 		break;
 	case Bullet::TANK:
+		pos.x = startVector.x + speed.x * time;
+		pos.y = startVector.y + (speed.y * time) - (0.5f * velocity * time * time);
+
+		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
+		time += ELTime * bulletSpeed;
+
+
 		break;
 	default:
 		break;
 	}
-	rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
 
-	pos.x += moveVector.x * ELTime * bulletSpeed;
-	pos.y += moveVector.y * ELTime * bulletSpeed;
-
-	time += ELTime;
 }
 
 void Bullet::Render()
 {
-	RENDERMANAGER->DrawImage(mainTexture, pos, scale, rotate, color);
+	RENDERMANAGER->DrawImage(mainTexture, pos, scale, rotate , color);
 }
 
 void Bullet::Release()

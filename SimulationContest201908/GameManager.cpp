@@ -5,6 +5,7 @@
 #include "MouseControll.h"
 #include "Map.h"
 #include "Firebat.h"
+#include "Tank.h"
 
 void GameManager::Init()
 {
@@ -19,6 +20,9 @@ void GameManager::Init()
 			obj->pos = { pivot.x + i * 60, pivot.y + j * 60, 0 };
 		}
 	}
+	GameObject* obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Tank());
+	obj->pos = { -300, -300, 0 };
+
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3; j++)

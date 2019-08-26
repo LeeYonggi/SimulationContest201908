@@ -6,6 +6,16 @@ float RotateToVec2(Vector2 p1, Vector2 p2)
 	return atan2f(p2.y - p1.y, p2.x - p1.x);
 }
 
+float AbsRotate(float rot)
+{
+	if (rot < 0)
+		rot = -rot;
+	else
+		rot = D3DX_PI * 2 - rot;
+
+	return rot;
+}
+
 bool RectCollision(Vector2 p1, Vector2 size1, Vector2 p2, Vector2 size2)
 {
 	RECT re = { 0 };

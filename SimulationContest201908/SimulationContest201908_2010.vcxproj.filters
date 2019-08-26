@@ -78,6 +78,9 @@
     <Filter Include="GameObject\Building">
       <UniqueIdentifier>{9e57803f-5cc1-4f9b-9b28-71ea8f2bec19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Character\Tank">
+      <UniqueIdentifier>{33b5182e-d033-44c2-a30b-96dffc150f21}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -203,6 +206,9 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>GameObject\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="Tank.cpp">
+      <Filter>GameObject\Character\Tank</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -274,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>GameObject\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Tank.h">
+      <Filter>GameObject\Character\Tank</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

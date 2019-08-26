@@ -151,7 +151,7 @@ void ObjectManager::DrawTagObject(GameObject::GAMEOBJECT_TAG tag)
 	for (auto obj : *iter)
 	{
 		Texture* light = obj->lightTexture;
-		RENDERMANAGER->DrawImage(light, obj->pos, {3, 3});
+		RENDERMANAGER->DrawImage(light, obj->pos);
 	}
 }
 

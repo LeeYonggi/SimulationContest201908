@@ -2,6 +2,7 @@
 
 
 float RotateToVec2(Vector2 p1, Vector2 p2);
+float AbsRotate(float rot);
 
 bool RectCollision(Vector2 p1, Vector2 size1, Vector2 p2, Vector2 size2);
 
@@ -21,3 +22,8 @@ T Lerp(T p1, T p2, float d)
 	return p1 + (p2 - p1) * d;
 }
 
+template<typename T>
+T RLerp(T p1, T p2, float d)
+{
+	return p1 + (p2 - p1) * d;
+}

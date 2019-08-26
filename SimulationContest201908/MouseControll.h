@@ -12,6 +12,7 @@ private:
 	Vector2 firstPos = { 0, 0 };
 	Vector2 endPos = { 0, 0 };
 	bool isPress = false;
+	bool isControll = true;
 	list<Character*> selectList;
 	
 

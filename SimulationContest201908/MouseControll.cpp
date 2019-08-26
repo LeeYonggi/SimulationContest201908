@@ -40,7 +40,10 @@ void MouseControll::Update()
 	{
 		MoveObject();
 	}
-	CameraControll();
+	if (isControll)
+		CameraControll();
+	if (INPUTMANAGER->IsKeyDown(VK_F1))
+		isControll = !isControll;
 }
 
 void MouseControll::Render()
