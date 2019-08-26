@@ -1,4 +1,4 @@
-#include "DXUT.h"
+﻿#include "DXUT.h"
 #include "RenderManager.h"
 
 RenderManager::RenderManager()
@@ -174,4 +174,26 @@ void RenderManager::DrawLightShader(LPD3DXEFFECT shader, LPDIRECT3DTEXTURE9 ligh
 		sprite->End();
 	}
 	shader->End();
+}
+
+void RenderManager::DrawFont(string str, Vector2 pos, float scale, D3DXCOLOR color)
+{
+	LPD3DXFONT font;
+
+	D3DXCreateFontA(DEVICE, scale, 0, FW_HEAVY, 1, false, HANGUL_CHARSET, 0, 0, 0, "맑은 고딕", &font);
+
+	Matrix matT;
+	D3DXMatrixTranslation(&matT, pos.x, pos.y, 0);
+
+	sprite->SetTransform(&matT);
+
+	sprite->Begin(D3DXSPRITE_ALPHABLEND);
+
+	RECT re = { 0 };
+
+	font->DrawTextA(sprite, str.c_str(), -1, &re, DT_NOCLIP, color);
+
+	sprite->End();
+
+	SAFE_RELEASE(font);
 }

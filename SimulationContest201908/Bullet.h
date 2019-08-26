@@ -32,7 +32,7 @@ private:
 	float endTime = 0;
 	float height = 0;
 	float endheight = 0;
-	float maxTime = 1.6f;
+	float maxTime = 1.0f;
 
 
 public:

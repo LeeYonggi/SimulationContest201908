@@ -26,11 +26,11 @@ void Tank::Init()
 
 	animator->SetNowAnime("Idle");
 
-	moveRadar = 300.0f;
-	attackRader = 300.0f;
+	moveRadar = 250.0f;
+	attackRader = 250.0f;
 
 	ChangeState(new Character_Idle(this));
-	hp = 100;
+	hp = 10000;
 }
 
 void Tank::Update()
@@ -51,8 +51,6 @@ void Tank::Release()
 
 void Tank::CharacterAttack()
 {
-	if(animator->GetNowAnimeName() != "Attack" || animator->GetFrameEnd() == true)
-		animator->SetNowAnime("Attack");
 	if (static_cast<Character*>(targetObject)->hp < 0)
 	{
 		ChangeState(new Character_Idle(this));
@@ -69,17 +67,32 @@ void Tank::CharacterAttack()
 	D3DXVec2Normalize(&dir, &dir);
 	dirVector = dir;
 
-	if (animator->GetNowFrame() == 0)
+	if (attackDelay < 0)
 	{
-		Bullet* bullet = new Bullet(Bullet::TANK, targetObject);
-		bullet->pos.x = pos.x + dirVector.x * 30;
-		bullet->pos.y = pos.y;
+		for (int i = 0; i < 3; i++)
+		{
+			Bullet* bullet = new Bullet(Bullet::TANK, targetObject);
 
-		if (tag == PLAYER)
-			OBJECTMANAGER->AddObject(PLAYER_BULLET, bullet);
-		else
-			OBJECTMANAGER->AddObject(ENEMY_BULLET, bullet);
+			float temp = RotateToVec2({ 0, 0 }, dirVector);
+
+			Vector2 tempVector;
+			tempVector.x = cos(temp + -0.5 + static_cast<float>(i) * 0.5f);
+			tempVector.y = sin(temp + -0.5 + static_cast<float>(i) * 0.5f);
+
+			bullet->pos.x = pos.x + dirVector.x * 30 + tempVector.x;
+			bullet->pos.y = pos.y + tempVector.y;
+
+			if (tag == PLAYER)
+				OBJECTMANAGER->AddObject(PLAYER_BULLET, bullet);
+			else
+				OBJECTMANAGER->AddObject(ENEMY_BULLET, bullet);
+		}
+
 
 		//animator->SetNowAnime("Attack");
+		attackDelay = animator->GetAnime("Attack")->textures.size();
+		animator->SetNowAnime("Attack");
+		animator->SetNowFrame(0);
 	}
+	attackDelay -= ELTime * animator->GetAnime("Attack")->animeSpeed;
 }

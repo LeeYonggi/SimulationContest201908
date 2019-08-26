@@ -56,18 +56,22 @@ void Bullet::Init()
 	case Bullet::TANK:
 		mainTexture = RESOURCEMANAGER->AddTexture("Character/tank/tank_bullet.png");
 
-		damage = 25;
+		damage = 15;
 
 		radius = 5.0f;
 
 		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
 		bulletSpeed = 400;
 
-		startVector = Vector2(pos);
+		/*startVector = Vector2(pos);
 		targetVector = Vector2(targetObj->pos);
 
 		endheight = targetVector.y - startVector.y;
-		height = 50 - startVector.y;
+		if(targetVector.y > startVector.y)
+			height = (targetVector.y + 100) - targetVector.y;
+		else
+			height = (startVector.y + 100) - targetVector.y;
+
 		velocity = 2 * height / (maxTime * maxTime);
 		speed.y = sqrt(2 * velocity * height);
 
@@ -79,9 +83,18 @@ void Bullet::Init()
 			endTime = (-b + sqrt(b * b - 4 * a * c)) / (2 * a);
 
 			speed.x = -(startVector.x - targetVector.x) / endTime;
+		}*/
+
+		moveVector = Vector2(targetObj->pos - pos);
+
+		D3DXVec2Normalize(&moveVector, &moveVector);
+
+		{
+			float temp = RotateToVec2({ 0, 0 }, moveVector);
+
+			moveVector.x = cos(temp + (float)RandomNumber(-3, 3) * 0.1f);
+			moveVector.y = sin(temp + (float)RandomNumber(-3, 3) * 0.1f);
 		}
-
-
 
 		break;
 	default:
@@ -122,13 +135,26 @@ void Bullet::Update()
 		time += ELTime;
 		break;
 	case Bullet::TANK:
-		pos.x = startVector.x + speed.x * time;
-		pos.y = startVector.y + (speed.y * time) - (0.5f * velocity * time * time);
+		/*pos.x = startVector.x + speed.x * time;
+		pos.y = startVector.y + (speed.y * time) - (0.5f * velocity * time * time);*/
 
+		if (WallCollision(Vector2(pos), { 2, 2 }) || time > 3.0f)
+			destroy = true;
+		BulletCollision(true);
+
+		pos.x += moveVector.x * ELTime * bulletSpeed;
+		pos.y += moveVector.y * ELTime * bulletSpeed;
+
+		{
+			float temp = RotateToVec2({ 0, 0 }, moveVector);
+
+			moveVector.x = cos(temp + (float)RandomNumber(-3, 3) * 0.03f);
+			moveVector.y = sin(temp + (float)RandomNumber(-3, 3) * 0.03f);
+		}
+		
 		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
-		time += ELTime * bulletSpeed;
 
-
+		time += ELTime;
 		break;
 	default:
 		break;
