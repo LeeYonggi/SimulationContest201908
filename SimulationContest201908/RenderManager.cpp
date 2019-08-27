@@ -176,24 +176,54 @@ void RenderManager::DrawLightShader(LPD3DXEFFECT shader, LPDIRECT3DTEXTURE9 ligh
 	shader->End();
 }
 
-void RenderManager::DrawFont(string str, Vector2 pos, float scale, D3DXCOLOR color)
+void RenderManager::DrawFont(const string& context, Vector2 pos, int size, D3DXCOLOR color)
 {
-	LPD3DXFONT font;
+	Matrix m;
+	D3DXMatrixTranslation(&m, pos.x, pos.y, 0);
 
-	D3DXCreateFontA(DEVICE, scale, 0, FW_HEAVY, 1, false, HANGUL_CHARSET, 0, 0, 0, "맑은 고딕", &font);
-
-	Matrix matT;
-	D3DXMatrixTranslation(&matT, pos.x, pos.y, 0);
-
-	sprite->SetTransform(&matT);
+	sprite->SetTransform(&m);
 
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
+#if DEBUG
+	LPD3DXFONT font = RESOURCEMANAGER->FindFont(size);
+	
+	if (font != nullptr)
+		font->DrawTextA(sprite, context.c_str(), context.length(), NULL, DT_NOCLIP, color);
+	else
+	{
+		font = RESOURCEMANAGER->CreateFontA("맑은 고딕", size);
+		font->DrawTextA(sprite, context.c_str(), context.length(), NULL, DT_NOCLIP, color);
+	}
+#else
 
-	RECT re = { 0 };
+	RESOURCEMANAGER->FindFont(size)->DrawTextA(sprite, context.c_str(), context.length(), NULL, DT_NOCLIP, color);
 
-	font->DrawTextA(sprite, str.c_str(), -1, &re, DT_NOCLIP, color);
-
+#endif
 	sprite->End();
+}
 
-	SAFE_RELEASE(font);
+void RenderManager::DrawFontWorld(const string& context, Vector2 pos, int size, D3DXCOLOR color)
+{
+	Matrix m;
+	D3DXMatrixTranslation(&m, pos.x, pos.y, 0);
+
+	sprite->SetTransform(&m);
+
+	sprite->Begin(D3DXSPRITE_ALPHABLEND);
+#if DEBUG
+	LPD3DXFONT font = RESOURCEMANAGER->FindFont(size);
+
+	if (font != nullptr)
+		font->DrawTextA(sprite, context.c_str(), context.length(), NULL, DT_NOCLIP, color);
+	else
+	{
+		font = RESOURCEMANAGER->CreateFontA("맑은 고딕", size);
+		font->DrawTextA(sprite, context.c_str(), context.length(), NULL, DT_NOCLIP, color);
+	}
+#else
+
+	RESOURCEMANAGER->FindFont(size)->DrawTextA(sprite, context.c_str(), context.length(), NULL, DT_NOCLIP, color);
+
+#endif
+	sprite->End();
 }

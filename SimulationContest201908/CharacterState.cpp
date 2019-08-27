@@ -112,9 +112,19 @@ void Character_Move::SendStringMessage(string str)
 {
 }
 
+Character_Die::Character_Die(Character* _character)
+	: Character_State(_character)
+{
+	character->lightTexture = nullptr;
+
+}
+
 void Character_Die::Update()
 {
-	character->destroy = true;
+	character->animator->SetNowAnime("Die");
+	character->color.r = character->color.g = character->color.b = color;
+	if (color > 0.4f)
+		color -= ELTime;
 }
 
 void Character_Die::SendStringMessage(string str)

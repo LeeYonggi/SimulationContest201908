@@ -44,8 +44,8 @@ public:
 
 		iter->second.push_back(obj);
 
-		obj->Init();
 		obj->tag = tag;
+		obj->Init();
 		sortList.push_back(obj);
 
 		return obj;

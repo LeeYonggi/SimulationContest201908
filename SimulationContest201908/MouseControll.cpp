@@ -71,14 +71,16 @@ void MouseControll::SelectObject()
 
 	for (auto obj : *iter)
 	{
-		if (RectCollision(Vector2(obj->pos), {2, 2}, center, size))
+		Character* character = static_cast<Character*>(obj);
+		if (RectCollision(Vector2(obj->pos), {2, 2}, center, size) &&
+			character->hp > 0)
 		{
-			selectList.push_back(static_cast<Character*>(obj));
-			static_cast<Character*>(obj)->isSelect = true;
+			selectList.push_back(character);
+			character->isSelect = true;
 		}
 		else
 		{
-			static_cast<Character*>(obj)->isSelect = false;
+			character->isSelect = false;
 		}
 	}
 }

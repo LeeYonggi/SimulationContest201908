@@ -28,6 +28,11 @@ void ResourceManager::Release()
 		SAFE_RELEASE(iter.second);
 	}
 	shaderMap.clear();
+	for (auto iter : fontMap)
+	{
+		SAFE_RELEASE(iter.second);
+	}
+	fontMap.clear();
 }
 
 Texture* ResourceManager::AddTexture(string path)
@@ -89,4 +94,36 @@ LPD3DXEFFECT ResourceManager::CreateShader(string path)
 	shaderMap.insert(make_pair(path, shader));
 
 	return shader;
+}
+
+LPD3DXFONT ResourceManager::CreateFontA(const string& faceName, int size)
+{
+	auto iter = fontMap.find(size);
+
+	if (iter != fontMap.end()) return iter->second;
+
+	LPD3DXFONT font;
+
+	D3DXCreateFontA(DEVICE, size, 0, FW_HEAVY, 1, false, HANGUL_CHARSET, 0, 0, 0, faceName.c_str(), &font);
+
+	fontMap.insert(make_pair(size, font));
+
+	return font;
+}
+
+void ResourceManager::CreateFontList(const string& faceName, int start_size, int end_size)
+{
+	for (int i = start_size; i <= end_size; i++)
+	{
+		CreateFontA(faceName.c_str(), i);
+	}
+}
+
+
+LPD3DXFONT ResourceManager::FindFont(int size)
+{
+	if (auto find = fontMap.find(size); find != fontMap.end())
+		return find->second;
+
+	return nullptr;
 }

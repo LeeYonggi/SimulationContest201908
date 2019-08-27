@@ -48,6 +48,19 @@ Vector2 WorldToScreen(Vector2 p1)
 	return temp;
 }
 
+Vector2 ScreenToWorld(Vector2 p1)
+{
+	Vector2 temp = { CAMERAMANAGER->pos.x, CAMERAMANAGER->pos.y };
+	Vector2 screenSize = CAMERAMANAGER->screenSize;
+
+	screenSize.x = (float)SCREEN_X / screenSize.x;
+	screenSize.y = (float)SCREEN_Y / screenSize.y;
+
+	temp.x = (p1.x - temp.x) * screenSize.x + SCREEN_X * 0.5f;
+	temp.y = SCREEN_Y * 0.5f - (p1.y - temp.y) * screenSize.y;
+	return temp;
+}
+
 float Vec2Distance(Vector2 p1, Vector2 p2)
 {
 	Vector2 temp = p2 - p1;

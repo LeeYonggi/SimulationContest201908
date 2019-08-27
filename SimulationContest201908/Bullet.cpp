@@ -1,6 +1,7 @@
 #include "DXUT.h"
 #include "Bullet.h"
 
+#include "DamageFont.h"
 
 Bullet::Bullet(BULLET_STATE state, GameObject* target)
 {
@@ -30,6 +31,8 @@ void Bullet::Init()
 		damage = 10;
 
 		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
+
+		startVector = Vector2(pos);
 		break;
 	case Bullet::FIREBAT:
 		mainTexture = RESOURCEMANAGER->AddTexture("Character/firebat/weapon/fire.png");
@@ -47,11 +50,13 @@ void Bullet::Init()
 
 		radius = 5.0f;
 
-		damage = 2;
+		damage = 5;
 
 		growFire = RandomNumber(10, 30) * 0.02f;
 
 		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
+
+		startVector = Vector2(pos);
 		break;
 	case Bullet::TANK:
 		mainTexture = RESOURCEMANAGER->AddTexture("Character/tank/tank_bullet.png");
@@ -62,8 +67,9 @@ void Bullet::Init()
 
 		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
 		bulletSpeed = 400;
+		startVector = Vector2(pos);
 
-		/*startVector = Vector2(pos);
+		/*
 		targetVector = Vector2(targetObj->pos);
 
 		endheight = targetVector.y - startVector.y;
@@ -180,13 +186,16 @@ void Bullet::BulletCollision(bool isDestroy)
 
 	for (auto obj : *iter)
 	{
-		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius))
+		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius) && 
+			static_cast<Character*>(obj)->hp > 0)
 		{
 			Character* character = static_cast<Character*>(obj);
-			character->CharacterAttacked(damage);
+			character->CharacterAttacked(damage, startVector);
+			DamageFont* damageFont = new DamageFont(Vector2(pos), damage);
+			OBJECTMANAGER->AddObject(UI, damageFont);
 			if (isDestroy)
 				destroy = true;
-			fireHitTime = 0.1f;
+			fireHitTime = 0.5f;
 		}
 	}
 }

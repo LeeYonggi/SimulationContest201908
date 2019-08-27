@@ -72,7 +72,7 @@ void ObjectManager::Render()
 	list<GameObject*> uiList;
 	for (auto iter : sortList)
 	{
-		if (iter->pos.z < -10)
+		if (iter->tag == GameObject::UI || iter->tag == GameObject::MOUSE_CONTROLL)
 		{
 			uiList.push_back(iter);
 			continue;
@@ -150,6 +150,7 @@ void ObjectManager::DrawTagObject(GameObject::GAMEOBJECT_TAG tag)
 
 	for (auto obj : *iter)
 	{
+		if (!obj->lightTexture) continue;
 		Texture* light = obj->lightTexture;
 		RENDERMANAGER->DrawImage(light, obj->pos);
 	}

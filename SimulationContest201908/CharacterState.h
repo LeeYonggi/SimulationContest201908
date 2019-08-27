@@ -62,12 +62,10 @@ public:
 class Character_Die
 	: public Character_State
 {
+private:
+	float color = 1.0f;
 public:
-	Character_Die(Character* _character)
-		: Character_State(_character)
-	{
-		stateName = "Die";
-	}
+	Character_Die(Character* _character);
 	virtual ~Character_Die()
 	{
 

@@ -81,6 +81,15 @@
     <Filter Include="GameObject\Character\Tank">
       <UniqueIdentifier>{33b5182e-d033-44c2-a30b-96dffc150f21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\DamageFont">
+      <UniqueIdentifier>{89a3895d-4c48-4a61-9354-9430a113e809}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\UI">
+      <UniqueIdentifier>{afe11ea6-3d7c-4410-90de-4fe355599b28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\UI\GameObject">
+      <UniqueIdentifier>{60f786da-5980-42b5-ba2a-666a925c5fe4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -209,6 +218,15 @@
     <ClCompile Include="Tank.cpp">
       <Filter>GameObject\Character\Tank</Filter>
     </ClCompile>
+    <ClCompile Include="DamageFont.cpp">
+      <Filter>GameObject\DamageFont</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>GameObject\UI\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -283,6 +301,15 @@
     </ClInclude>
     <ClInclude Include="Tank.h">
       <Filter>GameObject\Character\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageFont.h">
+      <Filter>GameObject\DamageFont</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>GameObject\UI\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

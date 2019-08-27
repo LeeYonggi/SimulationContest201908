@@ -31,6 +31,7 @@
     <ProjectGuid>{D3D09108-96D0-4629-88B8-122C0256058C}</ProjectGuid>
     <RootNamespace>SimulationContest201908</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -147,6 +148,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DXUT.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
@@ -228,6 +230,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>DXUT.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
@@ -388,8 +391,10 @@
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CharacterState.cpp" />
+    <ClCompile Include="DamageFont.cpp" />
     <ClCompile Include="Firebat.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="IngameScene.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -398,6 +403,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="Tank.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Building.h" />
@@ -405,9 +411,11 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterState.h" />
+    <ClInclude Include="DamageFont.h" />
     <ClInclude Include="Firebat.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="IngameScene.h" />
     <ClInclude Include="InputManager.h" />
@@ -423,6 +431,7 @@
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tank.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Utility.h" />
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="DXUT\Core\DXUT.h" />

@@ -24,13 +24,18 @@ void Tank::Init()
 	animator->AddAnime("Attack",
 		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/tank/attack/attack%d.png", 1, 6), false));
 
+	vector<Texture*> die;
+	die.push_back(RESOURCEMANAGER->AddTexture("Character/dead/dead.png"));
+	animator->AddAnime("Die", new Animation(die, true));
+
 	animator->SetNowAnime("Idle");
 
 	moveRadar = 250.0f;
 	attackRader = 250.0f;
 
 	ChangeState(new Character_Idle(this));
-	hp = 10000;
+
+	hp = 100;
 }
 
 void Tank::Update()
@@ -51,7 +56,7 @@ void Tank::Release()
 
 void Tank::CharacterAttack()
 {
-	if (static_cast<Character*>(targetObject)->hp < 0)
+	if (static_cast<Character*>(targetObject)->hp < 1)
 	{
 		ChangeState(new Character_Idle(this));
 		return;
@@ -69,15 +74,15 @@ void Tank::CharacterAttack()
 
 	if (attackDelay < 0)
 	{
-		for (int i = 0; i < 3; i++)
+		for (float i = 0; i < 3; i += 1)
 		{
 			Bullet* bullet = new Bullet(Bullet::TANK, targetObject);
 
 			float temp = RotateToVec2({ 0, 0 }, dirVector);
 
 			Vector2 tempVector;
-			tempVector.x = cos(temp + -0.5 + static_cast<float>(i) * 0.5f);
-			tempVector.y = sin(temp + -0.5 + static_cast<float>(i) * 0.5f);
+			tempVector.x = cos(temp + -0.5 + i * 0.5f);
+			tempVector.y = sin(temp + -0.5 + i * 0.5f);
 
 			bullet->pos.x = pos.x + dirVector.x * 30 + tempVector.x;
 			bullet->pos.y = pos.y + tempVector.y;
@@ -90,9 +95,9 @@ void Tank::CharacterAttack()
 
 
 		//animator->SetNowAnime("Attack");
-		attackDelay = animator->GetAnime("Attack")->textures.size();
-		animator->SetNowAnime("Attack");
+		attackDelay = 2.0f;
 		animator->SetNowFrame(0);
+		animator->SetNowAnime("Attack");
 	}
-	attackDelay -= ELTime * animator->GetAnime("Attack")->animeSpeed;
+	attackDelay -= ELTime;
 }

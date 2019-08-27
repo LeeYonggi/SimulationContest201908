@@ -21,6 +21,10 @@ void Firebat::Init()
 	animator->AddAnime("Move",
 		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/firebat/run/run%d.png", 1, 6), true));
 
+	vector<Texture*> die;
+	die.push_back(RESOURCEMANAGER->AddTexture("Character/dead/firebat_dead.png"));
+	animator->AddAnime("Die", new Animation(die, true));
+
 	animator->SetNowAnime("Idle");
 
 	ChangeState(new Character_Idle(this));
@@ -47,7 +51,7 @@ void Firebat::Update()
 		gun->renderActive = false;
 	else if(renderActive == true && gun)
 		gun->renderActive = true;
-	if (gun && hp < 0)
+	if (gun && hp < 1)
 	{
 		gun->destroy = true;
 		gun = nullptr;
@@ -67,7 +71,7 @@ void Firebat::Release()
 void Firebat::CharacterAttack()
 {
 	animator->SetNowAnime("Idle");
-	if (static_cast<Character*>(targetObject)->hp < 0)
+	if (static_cast<Character*>(targetObject)->hp < 1)
 	{
 		ChangeState(new Character_Idle(this));
 		return;

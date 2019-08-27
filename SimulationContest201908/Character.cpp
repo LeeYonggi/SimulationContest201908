@@ -30,6 +30,22 @@ void Character::Update()
 	else
 		flip.first = false;
 
+	if (tag == ENEMY)
+		renderActive = ForgCheck();
+
+	if (hp < 1 && state->stateName != "Die")
+	{
+		ChangeState(new Character_Die(this));
+		if (isSelect)
+		{
+			auto iter = *OBJECTMANAGER->GetObjectList(GAMEOBJECT_TAG::MOUSE_CONTROLL);
+			static_cast<MouseControll*>((*iter.begin()))->RemoveSelectObject(this);
+			isSelect = false;
+		}
+	}
+	else if (hp < 1)
+		return;
+
 	if (attackedTime > 0.0f)
 	{
 		color = { 1, 0, 0, 1 };
@@ -37,19 +53,6 @@ void Character::Update()
 	}
 	else
 		color = { 1, 1, 1, 1 };
-
-	if (hp < 0)
-	{
-		ChangeState(new Character_Die(this));
-		if (isSelect)
-		{
-			auto iter = *OBJECTMANAGER->GetObjectList(GAMEOBJECT_TAG::MOUSE_CONTROLL);
-			static_cast<MouseControll*>((*iter.begin()))->RemoveSelectObject(this);
-		}
-	}
-
-	if (tag == ENEMY)
-		renderActive = ForgCheck();
 }
 
 void Character::Render()
@@ -106,7 +109,8 @@ string Character::CharacterCollision()
 
 	for (auto obj : *character1)
 	{
-		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius))
+		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius) &&
+			static_cast<Character*>(obj)->hp > 0)
 		{
 			Vector2 dis = obj->pos - pos;
 			D3DXVec2Normalize(&dis, &dis);
@@ -124,7 +128,8 @@ string Character::CharacterCollision()
 	for (auto obj : *character2)
 	{
 		if (obj == this) continue;
-		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius))
+		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius) &&
+			static_cast<Character*>(obj)->hp > 0)
 		{
 			Vector2 dis = obj->pos - pos;
 			D3DXVec2Normalize(&dis, &dis);
@@ -147,7 +152,7 @@ GameObject* Character::IsCharacterRader(float radar)
 
 	for (auto obj : *iter)
 	{
-		if (CircleCollision(Vector2(obj->pos), 1, Vector2(pos), radar))
+		if (CircleCollision(Vector2(obj->pos), 1, Vector2(pos), radar) && static_cast<Character*>(obj)->hp > 0)
 		{
 			return obj;
 		}
@@ -171,8 +176,13 @@ bool Character::ForgCheck()
 	return false;
 }
 
-void Character::CharacterAttacked(int damage)
+void Character::CharacterAttacked(int damage, Vector2 target)
 {
 	attackedTime = 0.4f;
 	hp -= damage;
+	if (state->stateName == "Idle")
+	{
+		ChangeState(new Character_Move(true, this));
+		targetPos = target;
+	}
 }
