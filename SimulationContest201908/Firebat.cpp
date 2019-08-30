@@ -37,9 +37,11 @@ void Firebat::Init()
 	gun->distance = 10.0f;
 
 	moveRadar = 200.0f;
-	attackRader = 100.0f;
+	attackRadar = 100.0f;
 
 	radius = 25.0f;
+
+	hp = 30;
 
 	isMoveIdle = true;
 }
@@ -76,7 +78,7 @@ void Firebat::CharacterAttack()
 		ChangeState(new Character_Idle(this));
 		return;
 	}
-	if (!CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRader) && reloadTime > 0.0f)
+	if (!CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRadar) && reloadTime > 0.0f)
 	{
 		ChangeState(new Character_Move(true, this));
 		targetPos = Vector2(targetObject->pos);

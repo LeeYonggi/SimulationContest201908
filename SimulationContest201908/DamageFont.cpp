@@ -39,7 +39,7 @@ void DamageFont::Update()
 
 void DamageFont::Render()
 {
-	RENDERMANAGER->DrawFontWorld(to_string(damage), Vector2(pos), max(min(damage * 4, 50), 20), color);
+	RENDERMANAGER->DrawFont(to_wstring(damage), "fixedsys", Vector2(pos), max(min(damage * 4, 50), 20), color);
 }
 
 void DamageFont::Release()

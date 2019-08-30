@@ -38,8 +38,7 @@ public:
 	void DrawLine(Vector2 p1, Vector2 p2, float width, Color color = { 1, 1, 1, 1 });
 	void DrawLightShader(LPD3DXEFFECT shader, LPDIRECT3DTEXTURE9 lightMapTexture,
 		LPDIRECT3DTEXTURE9 darkMapTexture);
-	void DrawFont(const string& context, Vector2 pos, int size, D3DXCOLOR color = { 1, 1, 1, 1 });
-	void DrawFontWorld(const string& context, Vector2 pos, int size, D3DXCOLOR color = { 1, 1, 1, 1 });
+	void DrawFont(const wstring& context, const string& faceName, Vector2 pos, int size, D3DXCOLOR color = { 1, 1, 1, 1 });
 };
 
 #define RENDERMANAGER RenderManager::GetInstance()

@@ -17,7 +17,7 @@ public:
 private:
 	map<string, Texture*> textureMap;
 	map<string, LPD3DXEFFECT> shaderMap;
-	map<int, LPD3DXFONT> fontMap;
+	map<pair<string, int>, LPD3DXFONT> fontMap;
 
 public:
 	void Init();
@@ -30,7 +30,7 @@ public:
 	LPD3DXEFFECT CreateShader(string path);
 	LPD3DXFONT CreateFontA(const string& faceName, int size);
 	void CreateFontList(const string& faceName, int start_size, int end_size);
-	LPD3DXFONT FindFont(int size);
+	LPD3DXFONT FindFont(const string& faceName, int size);
 };
 
 #define RESOURCEMANAGER ResourceManager::GetInstance()

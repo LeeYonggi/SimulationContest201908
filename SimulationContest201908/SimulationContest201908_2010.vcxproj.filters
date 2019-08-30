@@ -87,8 +87,20 @@
     <Filter Include="GameObject\UI">
       <UniqueIdentifier>{afe11ea6-3d7c-4410-90de-4fe355599b28}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\UI\GameObject">
+    <Filter Include="GameObject\UI\GameUI">
       <UniqueIdentifier>{60f786da-5980-42b5-ba2a-666a925c5fe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Effect">
+      <UniqueIdentifier>{90ba67df-6009-4bcc-99bf-6554668f0e06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Aircraft">
+      <UniqueIdentifier>{274bd076-07da-4b4c-a3e6-cf49f3c892ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\UI\GameOperator">
+      <UniqueIdentifier>{86c15911-9db7-45ce-940d-fff6bd5ed3c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\UI\SBubble">
+      <UniqueIdentifier>{23a51d7c-5258-4fcc-b6c4-58603a4b21db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -225,7 +237,19 @@
       <Filter>GameObject\UI</Filter>
     </ClCompile>
     <ClCompile Include="GameUI.cpp">
-      <Filter>GameObject\UI\GameObject</Filter>
+      <Filter>GameObject\UI\GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOperator.cpp">
+      <Filter>GameObject\UI\GameOperator</Filter>
+    </ClCompile>
+    <ClCompile Include="Aircraft.cpp">
+      <Filter>GameObject\Character\Aircraft</Filter>
+    </ClCompile>
+    <ClCompile Include="SBubble.cpp">
+      <Filter>GameObject\UI\SBubble</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -309,7 +333,19 @@
       <Filter>GameObject\UI</Filter>
     </ClInclude>
     <ClInclude Include="GameUI.h">
-      <Filter>GameObject\UI\GameObject</Filter>
+      <Filter>GameObject\UI\GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOperator.h">
+      <Filter>GameObject\UI\GameOperator</Filter>
+    </ClInclude>
+    <ClInclude Include="Aircraft.h">
+      <Filter>GameObject\Character\Aircraft</Filter>
+    </ClInclude>
+    <ClInclude Include="SBubble.h">
+      <Filter>GameObject\UI\SBubble</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

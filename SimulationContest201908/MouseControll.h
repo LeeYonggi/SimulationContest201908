@@ -14,6 +14,7 @@ private:
 	bool isPress = false;
 	bool isControll = true;
 	list<Character*> selectList;
+	Character* targetCharacter = nullptr;
 	
 
 public:
@@ -27,6 +28,7 @@ public:
 	void SelectObject();
 	void MoveObject();
 	void CameraControll();
+	void AttackObject();
 public:
 	void RemoveSelectObject(Character* character);
 };

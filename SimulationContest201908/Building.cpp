@@ -47,7 +47,7 @@ bool Building::CharacterCollisionCheck(list<GameObject*>* objList)
 		temp.x = obj->mainTexture->info.Width;
 		temp.y = obj->mainTexture->info.Height;
 		if (RectCollision(Vector2(obj->pos), temp, Vector2(pos), size)
-			&& pos.y < obj->pos.y)
+			&& pos.y < obj->pos.y && static_cast<Character*>(obj)->hp > 0)
 		{
 			return true;
 		}

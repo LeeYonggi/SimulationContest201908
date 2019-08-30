@@ -26,7 +26,7 @@ void Map::Init()
 
 	Building* building = nullptr;
 
-	switch (GAMEMANAGER->stage)
+	switch (GAMEMANAGER->GetStage())
 	{
 	case STAGE_1:
 		anime = new Animation(RESOURCEMANAGER->AddAnimeTexture("Map/Map1/Map/wave%d.png", 1, 5), true);
@@ -80,6 +80,12 @@ void Map::Init()
 		building = new Building(RESOURCEMANAGER->AddTexture("Map/Map1/guardrail_2.png"));
 		OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
 		building->pos = { 550, 485, 0 };
+
+		break;
+
+	case STAGE_2:
+
+		mainTexture = RESOURCEMANAGER->AddTexture("Map/Map2/map_2.png");
 
 		break;
 	default:

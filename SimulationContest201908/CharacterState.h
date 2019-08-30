@@ -64,6 +64,8 @@ class Character_Die
 {
 private:
 	float color = 1.0f;
+	float time = 5.0f;
+
 public:
 	Character_Die(Character* _character);
 	virtual ~Character_Die()

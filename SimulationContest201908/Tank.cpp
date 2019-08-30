@@ -31,7 +31,7 @@ void Tank::Init()
 	animator->SetNowAnime("Idle");
 
 	moveRadar = 250.0f;
-	attackRader = 250.0f;
+	attackRadar = 250.0f;
 
 	ChangeState(new Character_Idle(this));
 
@@ -61,7 +61,7 @@ void Tank::CharacterAttack()
 		ChangeState(new Character_Idle(this));
 		return;
 	}
-	if (!CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRader))
+	if (!CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRadar))
 	{
 		ChangeState(new Character_Move(true, this));
 		targetPos = Vector2(targetObject->pos);

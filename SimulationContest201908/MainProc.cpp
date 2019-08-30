@@ -10,9 +10,9 @@ void MainProc::Init()
 
 void MainProc::Update()
 {
-	OBJECTMANAGER->Update();
-
 	SCENEMANAGER->Update();
+
+	OBJECTMANAGER->Update();
 
 	INPUTMANAGER->Update();
 }
@@ -24,6 +24,8 @@ void MainProc::Render()
 	OBJECTMANAGER->Render();
 
 	SCENEMANAGER->Render();
+
+	INPUTMANAGER->Render();
 }
 
 void MainProc::Release()

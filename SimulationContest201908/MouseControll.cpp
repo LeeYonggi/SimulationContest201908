@@ -36,14 +36,16 @@ void MouseControll::Update()
 	{
 		endPos = INPUTMANAGER->GetMouse();
 	}
+	AttackObject();
 	if (INPUTMANAGER->IsKeyDown(VK_RBUTTON))
 	{
 		MoveObject();
 	}
 	if (isControll)
 		CameraControll();
-	if (INPUTMANAGER->IsKeyDown(VK_F1))
+	if (INPUTMANAGER->IsKeyDown('1'))
 		isControll = !isControll;
+
 }
 
 void MouseControll::Render()
@@ -91,8 +93,17 @@ void MouseControll::MoveObject()
 
 	for (auto iter : selectList)
 	{
-		iter->SendMessageState("ChangeMove");
-		iter->targetPos = mouse;
+		if (INPUTMANAGER->GetAttack())
+		{
+			iter->targetObject = targetCharacter;
+			iter->SendMessageState("ChangeMoveDirect");
+		}
+		else
+		{
+			iter->SendMessageState("ChangeMove");
+			iter->targetPos = mouse;
+			iter->targetObject = nullptr;
+		}
 	}
 }
 
@@ -127,6 +138,28 @@ void MouseControll::CameraControll()
 		ClientToScreen(DXUTGetHWND(), &temp);
 		SetCursorPos(temp.x, temp.y);
 	}
+}
+
+void MouseControll::AttackObject()
+{
+	auto iter = OBJECTMANAGER->GetObjectList(ENEMY);
+	Vector2 mouse = WorldToScreen(INPUTMANAGER->GetMouse());
+
+	for (auto obj : *iter)
+	{
+		if (obj->mainTexture == nullptr || static_cast<Character*>(obj)->hp < 1 || !obj->renderActive)
+			continue;
+		Vector2 size = Vector2( obj->mainTexture->info.Width, obj->mainTexture->info.Height );
+
+		if (RectCollision(mouse, {2, 2}, Vector2(obj->pos), size))
+		{
+			INPUTMANAGER->SetAttack(true);
+			targetCharacter = static_cast<Character*>(obj);
+			return;
+		}
+	}
+	targetCharacter = nullptr;
+	INPUTMANAGER->SetAttack(false);
 }
 
 void MouseControll::RemoveSelectObject(Character* character)

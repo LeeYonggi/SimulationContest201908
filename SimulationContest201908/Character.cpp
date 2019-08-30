@@ -67,9 +67,14 @@ void Character::Release()
 }
 
 
+void Character::CharacterDie()
+{
+}
+
 string Character::CharacterCollision()
 {
 	auto back = OBJECTMANAGER->GetObjectList(BACKGROUND2);
+	string str = "NONE";
 
 	for (auto obj : *back)
 	{
@@ -99,6 +104,7 @@ string Character::CharacterCollision()
 			{
 				pos.y -= moveSpeed * ELTime;
 			}
+			str = "CollisionStack";
 		}
 	}
 
@@ -124,7 +130,6 @@ string Character::CharacterCollision()
 	if (tag == PLAYER)
 		character2 = OBJECTMANAGER->GetObjectList(PLAYER);
 
-	string str = "NONE";
 	for (auto obj : *character2)
 	{
 		if (obj == this) continue;
@@ -168,7 +173,8 @@ bool Character::ForgCheck()
 	{
 		Character* character = static_cast<Character*>(obj);
 
-		if (CircleCollision(Vector2(character->pos), character->moveRadar, Vector2(pos), radius))
+		if (CircleCollision(Vector2(character->pos), character->moveRadar, Vector2(pos), radius)
+			&& character->hp > 0)
 		{
 			return true;
 		}
@@ -185,4 +191,13 @@ void Character::CharacterAttacked(int damage, Vector2 target)
 		ChangeState(new Character_Move(true, this));
 		targetPos = target;
 	}
+}
+
+bool Character::IsCharacterTargetAttack()
+{
+	if (!targetObject) return false;
+
+	Character* target = static_cast<Character*>(targetObject);
+	
+	return (CircleCollision(Vector2(target->pos), 1, Vector2(pos), attackRadar) && static_cast<Character*>(target)->hp > 0);
 }

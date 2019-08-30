@@ -9,7 +9,10 @@ void Soldier::Init()
 	if (tag == PLAYER)
 		PlayerInit();
 	else if (tag == ENEMY)
+	{
 		EnemyInit();
+		hp = 20;
+	}
 	ChangeState(new Character_Idle(this));
 
 	gun = new Gun(RESOURCEMANAGER->AddAnimeTexture("Character/gunner/effect/effect%d.png", 1, 7),
@@ -20,9 +23,8 @@ void Soldier::Init()
 	gun->animator->GetAnime("Attack")->animeSpeed = 15.0f;
 	radius = 20.0f;
 	moveSpeed = 120.0f;
-
 	moveRadar = 200.0f;
-	attackRader = 150.0f;
+	attackRadar = 150.0f;
 }
 
 void Soldier::Update()
@@ -58,7 +60,7 @@ void Soldier::CharacterAttack()
 		ChangeState(new Character_Idle(this));
 		return;
 	}
-	if (!CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRader) && gun->animator->GetFrameEnd())
+	if (!CircleCollision(Vector2(targetObject->pos), 1, Vector2(pos), attackRadar) && gun->animator->GetFrameEnd())
 	{
 		ChangeState(new Character_Move(true, this));
 		targetPos = Vector2(targetObject->pos);

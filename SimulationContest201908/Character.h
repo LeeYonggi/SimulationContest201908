@@ -22,7 +22,7 @@ public:
 	Vector2 targetPos = { 0, 0 };
 	float moveSpeed = 100.0f;
 	float moveRadar = 100.0f;
-	float attackRader = 80.0f;
+	float attackRadar = 80.0f;
 	float characterTime = 0.0f;
 	bool isMoveIdle = false;
 	bool isSelect = false;
@@ -48,9 +48,12 @@ public:
 
 public:
 	virtual void CharacterAttack() = 0;
+	virtual void CharacterDie();
+public:
 	string CharacterCollision();
 	GameObject* IsCharacterRader(float radar);
 	bool ForgCheck();
 	void CharacterAttacked(int damage, Vector2 target);
+	bool IsCharacterTargetAttack();
 };
 

@@ -7,6 +7,7 @@
 #define DEVICE DXUTGetD3D9Device()
 #define SCREEN_X 1280
 #define SCREEN_Y 720
+#define HASH(key) GetHashCode(key)
 
 using Color	  = D3DXCOLOR;
 using Vector2 = D3DXVECTOR2;
@@ -22,8 +23,6 @@ extern float timeScale;
 
 #include "Singleton.h"
 
-#include "InputManager.h"
-
 #include "ResourceManager.h"
 
 #include "RenderManager.h"
@@ -35,6 +34,8 @@ extern float timeScale;
 #include "SceneManager.h"
 
 #include "Animator.h"
+
+#include "InputManager.h"
 
 #include "GameObject.h"
 

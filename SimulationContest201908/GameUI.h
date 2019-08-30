@@ -1,6 +1,7 @@
 #pragma once
 #include "UI.h"
 
+class GameOperator;
 class GameUI
 	: public UI
 {
@@ -9,6 +10,7 @@ public:
 	virtual ~GameUI();
 
 private:
+	Texture* miniMapTexture = nullptr;
 
 public:
 	// GameObject을(를) 통해 상속됨
@@ -16,5 +18,8 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void Release() override;
+
+public:
+	void MiniIconRender();
 };
 

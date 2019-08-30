@@ -103,6 +103,7 @@ void ObjectManager::Release()
 		iter.second.clear();
 	}
 	objectMap.clear();
+	sortList.clear();
 }
 
 void ObjectManager::LightingMapRender(float alpha)

@@ -2,6 +2,7 @@
 #include "Bullet.h"
 
 #include "DamageFont.h"
+#include "Effect.h"
 
 Bullet::Bullet(BULLET_STATE state, GameObject* target)
 {
@@ -28,7 +29,10 @@ void Bullet::Init()
 
 		radius = 5.0f;
 
-		damage = 10;
+		if (tag == ENEMY_BULLET)	
+			damage = 5;
+		else
+			damage = 10;
 
 		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
 
@@ -113,10 +117,17 @@ void Bullet::Update()
 	switch (bulletState)
 	{
 	case Bullet::SOLDIER:
-		if (WallCollision(Vector2(pos), { 2, 2 }) || time > 3.0f)
+		if (BulletCollision(true) || WallCollision(Vector2(pos), { 2, 2 }) || time > 3.0f)
+		{
 			destroy = true;
 
-		BulletCollision(true);
+			Animation* anime = new Animation(RESOURCEMANAGER->AddAnimeTexture("Effect/bullet_effect/effect%d.png", 1, 6),
+				false);
+			anime->animeSpeed = 10;
+			Effect* effect = new Effect(anime, 0.5f);
+			OBJECTMANAGER->AddObject(EFFECT, effect);
+			effect->pos = pos;
+		}
 		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
 
 		pos.x += moveVector.x * ELTime * bulletSpeed;
@@ -124,10 +135,9 @@ void Bullet::Update()
 		time += ELTime;
 		break;
 	case Bullet::FIREBAT:
-		if (time > 1.2f)
+		if(time > 1.2f)
 			destroy = true;
-
-		if(fireHitTime < 0.0f)
+		if (fireHitTime < 0.0f || time > 1.2f)
 			BulletCollision(false);
 
 		scale.x += growFire * ELTime;
@@ -139,14 +149,20 @@ void Bullet::Update()
 		pos.x += moveVector.x * ELTime * bulletSpeed;
 		pos.y += moveVector.y * ELTime * bulletSpeed;
 		time += ELTime;
+
 		break;
 	case Bullet::TANK:
-		/*pos.x = startVector.x + speed.x * time;
-		pos.y = startVector.y + (speed.y * time) - (0.5f * velocity * time * time);*/
-
-		if (WallCollision(Vector2(pos), { 2, 2 }) || time > 3.0f)
+		if (BulletCollision(true) || WallCollision(Vector2(pos), { 2, 2 }) || time > 3.0f)
+		{
 			destroy = true;
-		BulletCollision(true);
+
+			Animation* anime = new Animation(RESOURCEMANAGER->AddAnimeTexture("Effect/explosion/effect%d.png", 1, 8),
+				false);
+			anime->animeSpeed = 10;
+			Effect* effect = new Effect(anime, 0.7f);
+			OBJECTMANAGER->AddObject(EFFECT, effect);
+			effect->pos = pos;
+		}
 
 		pos.x += moveVector.x * ELTime * bulletSpeed;
 		pos.y += moveVector.y * ELTime * bulletSpeed;
@@ -177,7 +193,7 @@ void Bullet::Release()
 {
 }
 
-void Bullet::BulletCollision(bool isDestroy)
+bool Bullet::BulletCollision(bool isDestroy)
 {
 	auto iter = OBJECTMANAGER->GetObjectList(ENEMY);
 
@@ -194,8 +210,9 @@ void Bullet::BulletCollision(bool isDestroy)
 			DamageFont* damageFont = new DamageFont(Vector2(pos), damage);
 			OBJECTMANAGER->AddObject(UI, damageFont);
 			if (isDestroy)
-				destroy = true;
+				return true;
 			fireHitTime = 0.5f;
 		}
 	}
+	return false;
 }

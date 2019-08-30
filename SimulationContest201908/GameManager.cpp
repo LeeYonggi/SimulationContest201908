@@ -8,14 +8,61 @@
 #include "Tank.h"
 #include "GameObject.h"
 #include "GameUI.h"
+#include "IngameScene.h"
+#include "GameOperator.h"
+#include "Aircraft.h"
 
 void GameManager::Init()
 {
 	RESOURCEMANAGER->CreateFontList("fixedsys", 1, 100);
+	CAMERAMANAGER->screenSize = { 640, 360 };
 
+	switch (stage)
+	{
+	case STAGE_1:
+		Stage1Init();
+		break;
+	case STAGE_2:
+		Stage2Init();
+		break;
+	case STAGE_3:
+		break;
+	default:
+		break;
+	}
+
+	OBJECTMANAGER->AddObject(GameObject::MOUSE_CONTROLL, new MouseControll());
+}
+
+void GameManager::Update()
+{
+	if (INPUTMANAGER->IsKeyDown(VK_F1))
+	{
+		SCENEMANAGER->AddScene(new IngameScene());
+		SetStage(STAGE_1);
+	}
+	if (INPUTMANAGER->IsKeyDown(VK_F2))
+	{
+		SCENEMANAGER->AddScene(new IngameScene());
+		SetStage(STAGE_2);
+	}
+}
+
+void GameManager::Render()
+{
+}
+
+void GameManager::Release()
+{
+}
+
+void GameManager::Stage1Init()
+{
 	OBJECTMANAGER->AddObject(GameObject::BACKGROUND1, new Map());
 	OBJECTMANAGER->AddObject(GameObject::UI, new GameUI());
-	
+	oper = OBJECTMANAGER->AddObject(GameObject::UI, new GameOperator());
+	oper->SpeechChange(0);
+
 	for (int i = 0; i < 3; i++)
 	{
 		for (int j = 0; j < 3 + i % 2; j++)
@@ -31,24 +78,37 @@ void GameManager::Init()
 		for (int j = 0; j < 5; j++)
 		{
 			Vector2 pivot = { -200, 210 };
-			GameObject *obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Firebat());
+			GameObject* obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Firebat());
 			obj->pos = { pivot.x + i * 60, pivot.y + j * 60, 0 };
 		}
 	}
+	for (int i = 0; i < 2; i++)
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			Vector2 pivot = Vector2(-200, 100);
+			GameObject* obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Soldier());
+			obj->pos = { pivot.x + j * 60, pivot.y + i * 60, 0 };
+		}
+	}
 
-	OBJECTMANAGER->AddObject(GameObject::MOUSE_CONTROLL, new MouseControll());
-	CAMERAMANAGER->pos = {-320, -320, -10};
-	CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, {960, 540});
+	CAMERAMANAGER->pos = { -320, -320, -10 };
+	CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, { 960, 540 });
 }
 
-void GameManager::Update()
+void GameManager::Stage2Init()
 {
+	OBJECTMANAGER->AddObject(GameObject::BACKGROUND1, new Map());
+	OBJECTMANAGER->AddObject(GameObject::UI, new GameUI());
+	oper = OBJECTMANAGER->AddObject(GameObject::UI, new GameOperator());
+	//oper->SpeechChange(0);
+
+	OBJECTMANAGER->AddObject(GameObject::PLAYER, new Aircraft());
+
+	CAMERAMANAGER->pos = { -320, -320, -10 };
+	CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, { 960, 540 });
 }
 
-void GameManager::Render()
-{
-}
-
-void GameManager::Release()
+void GameManager::Stage3Init()
 {
 }

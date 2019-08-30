@@ -98,7 +98,7 @@ LPD3DXEFFECT ResourceManager::CreateShader(string path)
 
 LPD3DXFONT ResourceManager::CreateFontA(const string& faceName, int size)
 {
-	auto iter = fontMap.find(size);
+	auto iter = fontMap.find(make_pair(faceName, size));
 
 	if (iter != fontMap.end()) return iter->second;
 
@@ -106,7 +106,7 @@ LPD3DXFONT ResourceManager::CreateFontA(const string& faceName, int size)
 
 	D3DXCreateFontA(DEVICE, size, 0, FW_HEAVY, 1, false, HANGUL_CHARSET, 0, 0, 0, faceName.c_str(), &font);
 
-	fontMap.insert(make_pair(size, font));
+	fontMap.insert(make_pair(make_pair(faceName, size), font));
 
 	return font;
 }
@@ -120,9 +120,9 @@ void ResourceManager::CreateFontList(const string& faceName, int start_size, int
 }
 
 
-LPD3DXFONT ResourceManager::FindFont(int size)
+LPD3DXFONT ResourceManager::FindFont(const string& faceName, int size)
 {
-	if (auto find = fontMap.find(size); find != fontMap.end())
+	if (auto find = fontMap.find(make_pair(faceName, size)); find != fontMap.end())
 		return find->second;
 
 	return nullptr;

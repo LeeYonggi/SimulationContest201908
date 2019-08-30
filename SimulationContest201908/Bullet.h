@@ -43,7 +43,7 @@ public:
 	virtual void Release() override;
 
 public:
-	void BulletCollision(bool isDestroy);
+	bool BulletCollision(bool isDestroy);
 
 };
 

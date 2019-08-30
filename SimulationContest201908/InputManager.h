@@ -15,14 +15,21 @@ private:
 	bool pastKey[MAX_KEY];
 	Vector2 mouse = { 0, 0 };
 
+	Texture* mainTexture = nullptr;
+	Texture* attackTexture = nullptr;
+	bool isAttack = false;
+
 public:
 	void Init();
 	void Update();
+	void Render();
 
 public:
 	bool IsKeyDown(int key) { return (pastKey[key] == false && nowKey[key] == true); }
 	bool IsKeyPress(int key) { return (pastKey[key] == true && nowKey[key] == true); }
 	bool IsKeyUp(int key) { return (pastKey[key] == true && nowKey[key] == false); }
+	void SetAttack(bool value) { isAttack = value; };
+	bool GetAttack() { return isAttack; }
 	Vector2 GetMouse() { return mouse; }
 };
 

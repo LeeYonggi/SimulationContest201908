@@ -53,6 +53,7 @@ void Character_Idle::SendStringMessage(string str)
 {
 	if (str == "ChangeMoveDirect")
 	{
+		character->targetPos = Vector2(character->targetObject->pos);
 		character->ChangeState(new Character_Move(true, character));
 		return;
 	}
@@ -73,6 +74,8 @@ Character_Move::Character_Move(bool _isDirectAttack, Character* _character)
 
 void Character_Move::Update()
 {
+	if (character->tag == GameObject::PLAYER)
+		int a = 10;
 	Vector2 moveVector = { 0, 0 };
 	
 	moveVector = character->targetPos - Vector2(character->pos);
@@ -99,7 +102,7 @@ void Character_Move::Update()
 
 	if (isDirectAttack == false) return;
 
-	GameObject* obj = character->IsCharacterRader(character->attackRader);
+	GameObject* obj = character->IsCharacterRader(character->attackRadar);
 	if (obj)
 	{
 		character->targetObject = obj;
@@ -110,25 +113,40 @@ void Character_Move::Update()
 
 void Character_Move::SendStringMessage(string str)
 {
+	if (str == "ChangeMoveDirect" && character->targetObject)
+	{
+		if (character->IsCharacterTargetAttack())
+			character->ChangeState(new Character_Attack(character));
+		else
+		{
+			character->targetPos = Vector2(character->targetObject->pos);
+			isDirectAttack = true;
+		}
+		return;
+	}
 }
 
 Character_Die::Character_Die(Character* _character)
 	: Character_State(_character)
 {
 	character->lightTexture = nullptr;
-
+	stateName = "Die";
 }
 
 void Character_Die::Update()
 {
 	character->animator->SetNowAnime("Die");
-	character->color.r = character->color.g = character->color.b = color;
+	character->color = Color(color, color, color, color * 1.5f);
 	if (color > 0.4f)
 		color -= ELTime;
+	if (time < 0)
+		character->destroy = true;
+	time -= ELTime;
 }
 
 void Character_Die::SendStringMessage(string str)
 {
+
 }
 
 void Character_Attack::Update()
@@ -141,6 +159,16 @@ void Character_Attack::SendStringMessage(string str)
 	if (str == "ChangeMove")
 	{
 		character->ChangeState(new Character_Move(false, character));
+		return;
+	}
+	if (str == "ChangeMoveDirect")
+	{
+		if(character->IsCharacterTargetAttack())
+		{
+			character->ChangeState(new Character_Attack(character));
+		}
+		else
+			character->ChangeState(new Character_Move(true, character));
 		return;
 	}
 }
