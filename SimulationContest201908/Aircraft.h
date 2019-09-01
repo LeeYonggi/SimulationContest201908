@@ -5,6 +5,8 @@ class Aircraft :
 {
 public:
 
+private:
+	float attackDelay = 1.0f;
 
 public:
 	virtual void Init();

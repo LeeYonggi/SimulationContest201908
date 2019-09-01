@@ -11,6 +11,7 @@
 #include "IngameScene.h"
 #include "GameOperator.h"
 #include "Aircraft.h"
+#include "Worker.h"
 
 void GameManager::Init()
 {
@@ -68,7 +69,7 @@ void GameManager::Stage1Init()
 		for (int j = 0; j < 3 + i % 2; j++)
 		{
 			Vector2 pivot = Vector2(-500 - (i % 2 * 30.0f), -360);
-			GameObject* obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Soldier());
+			GameObject* obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Worker());
 			obj->pos = { pivot.x + j * 60, pivot.y + i * 60, 0 };
 		}
 	}
@@ -102,6 +103,11 @@ void GameManager::Stage2Init()
 	OBJECTMANAGER->AddObject(GameObject::UI, new GameUI());
 	oper = OBJECTMANAGER->AddObject(GameObject::UI, new GameOperator());
 	//oper->SpeechChange(0);
+
+	Vector2 pivot = Vector2(-200, 100);
+	GameObject* obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Soldier());
+	obj->pos = { pivot.x, pivot.y, 0 };
+
 
 	OBJECTMANAGER->AddObject(GameObject::PLAYER, new Aircraft());
 

@@ -84,5 +84,6 @@ void GameOperator::CloseBubble()
 {
 	sbubble->SetAnime("Close");
 	speechActive = false;
+	animator->SetNowAnime("Idle");
 }
 

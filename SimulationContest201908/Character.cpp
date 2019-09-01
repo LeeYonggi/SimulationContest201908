@@ -2,17 +2,27 @@
 #include "Character.h"
 
 #include "MouseControll.h"
+#include "Effect.h"
 
 Character::Character()
 {
 	animator = new Animator(this);
 	lightTexture = RESOURCEMANAGER->AddTexture("Light/light.png");
+
+	vector<Texture*> vTexture;
+	vTexture.push_back(RESOURCEMANAGER->AddTexture("Character/Shadow.png"));
+	shadow = new Effect(new Animation(vTexture, true));
+	OBJECTMANAGER->AddObject(EFFECT, shadow);
+	shadow->pos.x = pos.x;
+	shadow->pos.y = pos.y + shadowPivot;
+	shadow->pos.z = 1;
 }
 
 Character::~Character()
 {
 	SAFE_DELETE(animator);
 	SAFE_DELETE(state);
+	shadow->destroy = true;
 }
 
 void Character::Init()
@@ -53,13 +63,17 @@ void Character::Update()
 	}
 	else
 		color = { 1, 1, 1, 1 };
+
+	shadow->pos.x = pos.x;
+	shadow->pos.y = pos.y - shadowPivot;
+	shadow->renderActive = renderActive;
 }
 
 void Character::Render()
 {
 	if (isSelect)
 		RENDERMANAGER->DrawImage(RESOURCEMANAGER->AddTexture("Character/CharacterTarget.png"), 
-			Vector3(pos.x, pos.y - mainTexture->info.Height * 0.5f, pos.z), scale);
+			Vector3(pos.x, pos.y - shadowPivot, pos.z), scale);
 }
 
 void Character::Release()

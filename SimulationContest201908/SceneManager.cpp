@@ -25,6 +25,8 @@ void SceneManager::Update()
 		OBJECTMANAGER->Release();
 		OBJECTMANAGER->Init();
 
+		CAMERAMANAGER->isCameraZoom = make_pair(false, false);
+
 		nextScene->Init();
 
 		nowScene = nextScene;

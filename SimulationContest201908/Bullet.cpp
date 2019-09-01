@@ -34,7 +34,6 @@ void Bullet::Init()
 		else
 			damage = 10;
 
-		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
 
 		startVector = Vector2(pos);
 		break;
@@ -58,8 +57,6 @@ void Bullet::Init()
 
 		growFire = RandomNumber(10, 30) * 0.02f;
 
-		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
-
 		startVector = Vector2(pos);
 		break;
 	case Bullet::TANK:
@@ -69,31 +66,8 @@ void Bullet::Init()
 
 		radius = 5.0f;
 
-		lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
 		bulletSpeed = 400;
 		startVector = Vector2(pos);
-
-		/*
-		targetVector = Vector2(targetObj->pos);
-
-		endheight = targetVector.y - startVector.y;
-		if(targetVector.y > startVector.y)
-			height = (targetVector.y + 100) - targetVector.y;
-		else
-			height = (startVector.y + 100) - targetVector.y;
-
-		velocity = 2 * height / (maxTime * maxTime);
-		speed.y = sqrt(2 * velocity * height);
-
-		{
-			float a = velocity;
-			float b = -2 * speed.y;
-			float c = 2 * endheight;
-
-			endTime = (-b + sqrt(b * b - 4 * a * c)) / (2 * a);
-
-			speed.x = -(startVector.x - targetVector.x) / endTime;
-		}*/
 
 		moveVector = Vector2(targetObj->pos - pos);
 
@@ -107,9 +81,63 @@ void Bullet::Init()
 		}
 
 		break;
+
+	case LASER_START:
+		mainTexture = RESOURCEMANAGER->AddTexture("Effect/weapon/laser_3.png");
+
+		startVector = Vector2(pos);
+
+		moveVector = Vector2(targetObj->pos - pos);
+
+		D3DXVec2Normalize(&moveVector, &moveVector);
+
+		rotate = RotateToVec2(Vector2(0, 0), moveVector);
+
+		radius = 5.0f;
+
+		scale.y = 0.1f;
+
+		{
+			int i = 1;
+
+			while (true)
+			{
+				Vector2 distance = mainTexture->info.Width * moveVector;
+
+				if (CircleCollision(Vector2(distance * i + Vector2(pos)), radius, Vector2(targetObj->pos), targetObj->radius))
+				{
+					Bullet* bullet = OBJECTMANAGER->AddObject(tag, new Bullet(LASER_END, targetObj));
+					bullet->pos.x = distance.x * i + pos.x;
+					bullet->pos.y = distance.y * i + pos.y;
+					bullet->rotate = rotate;
+					break;
+				}
+				else
+				{
+					Bullet* bullet = OBJECTMANAGER->AddObject(tag, new Bullet(LASER_BODY, targetObj));
+					bullet->pos.x = distance.x * i + pos.x;
+					bullet->pos.y = distance.y * i + pos.y;
+					bullet->rotate = rotate;
+				}
+				i++;
+			}
+		}
+		break;
+	case LASER_BODY:
+		mainTexture = RESOURCEMANAGER->AddTexture("Effect/weapon/laser_2.png");
+		scale.y = 0.1f;
+		break;
+	case LASER_END:
+		mainTexture = RESOURCEMANAGER->AddTexture("Effect/weapon/laser_1.png");
+		radius = 5.0f;
+		damage = 10.0f;
+		scale.y = 0.1f;
+
+		break;
 	default:
 		break;
 	}
+	lightTexture = RESOURCEMANAGER->AddTexture("Light/Orange_Light.png");
 }
 
 void Bullet::Update()
@@ -117,7 +145,7 @@ void Bullet::Update()
 	switch (bulletState)
 	{
 	case Bullet::SOLDIER:
-		if (BulletCollision(true) || WallCollision(Vector2(pos), { 2, 2 }) || time > 3.0f)
+		if (BulletCollision() || WallCollision(Vector2(pos), { 2, 2 }) || time > 3.0f)
 		{
 			destroy = true;
 
@@ -132,27 +160,23 @@ void Bullet::Update()
 
 		pos.x += moveVector.x * ELTime * bulletSpeed;
 		pos.y += moveVector.y * ELTime * bulletSpeed;
-		time += ELTime;
 		break;
 	case Bullet::FIREBAT:
 		if(time > 1.2f)
 			destroy = true;
-		if (fireHitTime < 0.0f || time > 1.2f)
-			BulletCollision(false);
+		if (fireHitTime < 0.0f)
+			BulletCollision();
 
 		scale.x += growFire * ELTime;
 		scale.y += growFire * ELTime;
 
-		fireHitTime -= ELTime;
 		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
 
 		pos.x += moveVector.x * ELTime * bulletSpeed;
 		pos.y += moveVector.y * ELTime * bulletSpeed;
-		time += ELTime;
-
 		break;
 	case Bullet::TANK:
-		if (BulletCollision(true) || WallCollision(Vector2(pos), { 2, 2 }) || time > 3.0f)
+		if (BulletCollision() || WallCollision(Vector2(pos), { 2, 2 }) || time > 3.0f)
 		{
 			destroy = true;
 
@@ -175,13 +199,39 @@ void Bullet::Update()
 		}
 		
 		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
+		break;
+	case LASER_START:
+		if (time > 0.5f)
+			destroy = true;
+		scale.y = Lerp(scale.y, 1.0f, 0.2f);
+		break;
+	case LASER_BODY:
+		if (time > 0.5f)
+			destroy = true;
+		scale.y = Lerp(scale.y, 1.0f, 0.2f);
+		break;
+	case LASER_END:
+		if (time > 0.5f)
+			destroy = true;
 
-		time += ELTime;
+		if (fireHitTime < 0.0f && BulletCollision())
+		{
+			Animation* anime = new Animation(
+				RESOURCEMANAGER->AddAnimeTexture("Effect/effect/laser_effect_%d.png", 1, 3),false);
+			anime->animeSpeed = 7;
+			Effect* effect = new Effect(anime, 0.5f);
+			OBJECTMANAGER->AddObject(EFFECT, effect);
+			effect->pos = pos;
+			effect->scale = {1.5, 1.5};
+		}
+		scale.y = Lerp(scale.y, 1.0f, 0.2f);
 		break;
 	default:
 		break;
 	}
 
+	fireHitTime -= ELTime;
+	time += ELTime;
 }
 
 void Bullet::Render()
@@ -193,7 +243,7 @@ void Bullet::Release()
 {
 }
 
-bool Bullet::BulletCollision(bool isDestroy)
+bool Bullet::BulletCollision()
 {
 	auto iter = OBJECTMANAGER->GetObjectList(ENEMY);
 
@@ -209,9 +259,8 @@ bool Bullet::BulletCollision(bool isDestroy)
 			character->CharacterAttacked(damage, startVector);
 			DamageFont* damageFont = new DamageFont(Vector2(pos), damage);
 			OBJECTMANAGER->AddObject(UI, damageFont);
-			if (isDestroy)
-				return true;
 			fireHitTime = 0.5f;
+			return true;
 		}
 	}
 	return false;

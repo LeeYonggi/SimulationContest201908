@@ -25,6 +25,7 @@ void Soldier::Init()
 	moveSpeed = 120.0f;
 	moveRadar = 200.0f;
 	attackRadar = 150.0f;
+	shadowPivot = mainTexture->info.Height * 0.5f;
 }
 
 void Soldier::Update()

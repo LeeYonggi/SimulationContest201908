@@ -8,7 +8,10 @@ public:
 	{
 		SOLDIER,
 		FIREBAT,
-		TANK
+		TANK,
+		LASER_START,
+		LASER_BODY,
+		LASER_END
 	};
 
 public:
@@ -43,7 +46,7 @@ public:
 	virtual void Release() override;
 
 public:
-	bool BulletCollision(bool isDestroy);
+	bool BulletCollision();
 
 };
 

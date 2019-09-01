@@ -3,6 +3,7 @@
 
 #include "CharacterState.h"
 
+class Effect;
 class Character :
 	public GameObject
 {
@@ -13,6 +14,7 @@ public:
 protected:
 	Character_State *state = nullptr;
 	float attackedTime = 0.0f;
+	float shadowPivot = 0;
 
 public:
 	int hp = 50;
@@ -20,6 +22,7 @@ public:
 	Animator *animator = nullptr;
 	Vector2 dirVector = { 1, 0 };
 	Vector2 targetPos = { 0, 0 };
+	Effect* shadow = nullptr;
 	float moveSpeed = 100.0f;
 	float moveRadar = 100.0f;
 	float attackRadar = 80.0f;

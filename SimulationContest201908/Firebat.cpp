@@ -40,6 +40,7 @@ void Firebat::Init()
 	attackRadar = 100.0f;
 
 	radius = 25.0f;
+	shadowPivot = mainTexture->info.Height * 0.5f;
 
 	hp = 30;
 

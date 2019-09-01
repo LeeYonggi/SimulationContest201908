@@ -2,6 +2,7 @@
 #include "Tank.h"
 
 #include "Bullet.h"
+#include "Effect.h"
 
 Tank::Tank()
 {
@@ -32,6 +33,9 @@ void Tank::Init()
 
 	moveRadar = 250.0f;
 	attackRadar = 250.0f;
+	shadowPivot = mainTexture->info.Height * 0.5f;
+
+	radius = 30.0f;
 
 	ChangeState(new Character_Idle(this));
 
@@ -41,7 +45,6 @@ void Tank::Init()
 void Tank::Update()
 {
 	Character::Update();
-	
 }
 
 void Tank::Render()
@@ -100,4 +103,19 @@ void Tank::CharacterAttack()
 		animator->SetNowAnime("Attack");
 	}
 	attackDelay -= ELTime;
+}
+
+void Tank::CharacterDie()
+{
+	if (isDieBomb) return;
+
+	Animation* anime = new Animation(RESOURCEMANAGER->AddAnimeTexture("Effect/explosion/effect%d.png", 1, 8),
+		false);
+	anime->animeSpeed = 10;
+	Effect* effect = new Effect(anime, 0.7f);
+	OBJECTMANAGER->AddObject(EFFECT, effect);
+	effect->pos = pos;
+	effect->scale = { 2, 2 };
+
+	isDieBomb = true;
 }

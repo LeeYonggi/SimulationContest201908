@@ -1,17 +1,14 @@
 #pragma once
 #include "Character.h"
-class Tank :
+class Worker :
 	public Character
 {
 public:
-	Tank();
-	virtual ~Tank();
+	Worker();
+	virtual ~Worker();
 
 private:
-	float time = 0.0f;
-	float reloadTime = 0.0f;
-	float attackDelay = 0.0f;
-	bool isDieBomb = false;
+	float attackDelay = 1.0f;
 
 public:
 	virtual void Init();
@@ -22,6 +19,6 @@ public:
 public:
 	// Character을(를) 통해 상속됨
 	virtual void CharacterAttack() override;
-	virtual void CharacterDie() override;
+
 };
 

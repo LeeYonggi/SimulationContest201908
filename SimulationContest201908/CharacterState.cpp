@@ -141,6 +141,7 @@ void Character_Die::Update()
 		color -= ELTime;
 	if (time < 0)
 		character->destroy = true;
+	character->CharacterDie();
 	time -= ELTime;
 }
 

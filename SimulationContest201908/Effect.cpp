@@ -7,6 +7,8 @@ Effect::Effect(Animation* anime, float destroyTime)
 	animator->AddAnime("Idle", anime);
 	animator->SetNowAnime("Idle");
 	this->destroyTime = destroyTime;
+	if (destroyTime == 0.0f)
+		isActiveDestroy = false;
 }
 
 Effect::~Effect()
@@ -22,7 +24,7 @@ void Effect::Update()
 {
 	animator->Update();
 
-	if (time > destroyTime)
+	if (time > destroyTime && isActiveDestroy == true)
 		destroy = true;
 	time += ELTime;
 }

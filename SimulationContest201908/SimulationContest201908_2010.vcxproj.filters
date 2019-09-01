@@ -102,6 +102,9 @@
     <Filter Include="GameObject\UI\SBubble">
       <UniqueIdentifier>{23a51d7c-5258-4fcc-b6c4-58603a4b21db}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Character\Worker">
+      <UniqueIdentifier>{16900132-e2ef-4125-b56a-892d2703c5c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -251,6 +254,9 @@
     <ClCompile Include="SBubble.cpp">
       <Filter>GameObject\UI\SBubble</Filter>
     </ClCompile>
+    <ClCompile Include="Worker.cpp">
+      <Filter>GameObject\Character\Worker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -346,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="SBubble.h">
       <Filter>GameObject\UI\SBubble</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker.h">
+      <Filter>GameObject\Character\Worker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

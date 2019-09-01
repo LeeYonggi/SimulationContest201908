@@ -4,13 +4,14 @@ class Effect :
 	public GameObject
 {
 public:
-	Effect(Animation *anime, float destroyTime);
+	Effect(Animation *anime, float destroyTime = 0.0f);
 	virtual ~Effect();
 
 private:
 	Animator* animator = nullptr;
 	float time = 0.0f;
 	float destroyTime = 0.0f;
+	bool isActiveDestroy = true;
 
 public:
 	// GameObject을(를) 통해 상속됨
