@@ -92,6 +92,8 @@ void GameManager::Stage1Init()
 			obj->pos = { pivot.x + j * 60, pivot.y + i * 60, 0 };
 		}
 	}
+	GameObject* obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Tank());
+	obj->pos = { 200, -400, 0 };
 
 	CAMERAMANAGER->pos = { -320, -320, -10 };
 	CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, { 960, 540 });

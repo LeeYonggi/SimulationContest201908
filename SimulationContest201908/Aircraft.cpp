@@ -27,6 +27,7 @@ void Aircraft::Init()
 	hp = 100;
 	shadow->scale = { 4, 4 };
 	isFly = true;
+	moveSpeed = 140.0f;
 
 	shadowPivot = mainTexture->info.Height;
 	pos.z = -1;

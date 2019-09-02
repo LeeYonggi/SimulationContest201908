@@ -197,6 +197,15 @@ void Bullet::Update()
 			moveVector.x = cos(temp + (float)RandomNumber(-3, 3) * 0.03f);
 			moveVector.y = sin(temp + (float)RandomNumber(-3, 3) * 0.03f);
 		}
+		if ((int)(time * 100) % 5 == 0)
+		{
+			Effect* effect = new Effect(new Animation(
+				RESOURCEMANAGER->AddAnimeTexture("Effect/Dust/Dust.png", 0, 0), false), 0.5f);
+			effect->pos = pos;
+			effect->moveVector = -moveVector;
+			effect->moveSpeed = 100;
+			OBJECTMANAGER->AddObject(EFFECT, effect);
+		}
 		
 		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
 		break;

@@ -27,6 +27,9 @@ void Effect::Update()
 
 	if (time > destroyTime && isActiveDestroy == true)
 		destroy = true;
+
+	pos.x += moveVector.x * ELTime * moveSpeed;
+	pos.y += moveVector.y * ELTime * moveSpeed;
 	time += ELTime;
 }
 

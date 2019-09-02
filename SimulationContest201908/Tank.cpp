@@ -37,6 +37,7 @@ void Tank::Init()
 	shadow->scale = {3, 3};
 
 	radius = 30.0f;
+	moveSpeed = 85.0f;
 
 	ChangeState(new Character_Idle(this));
 

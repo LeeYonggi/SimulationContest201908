@@ -105,11 +105,7 @@ class Character_CreateTower
 	: public Character_State
 {
 public:
-	Character_CreateTower(Character* _character)
-		: Character_State(_character)
-	{
-		stateName = "CreateTower";
-	}
+	Character_CreateTower(Character* _character);
 	virtual ~Character_CreateTower()
 	{
 

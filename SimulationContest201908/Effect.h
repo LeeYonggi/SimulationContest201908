@@ -14,6 +14,10 @@ private:
 	bool isActiveDestroy = true;
 
 public:
+	Vector2 moveVector = { 0, 0 };
+	float moveSpeed = 100;
+
+public:
 	// GameObject을(를) 통해 상속됨
 	virtual void Init() override;
 	virtual void Update() override;

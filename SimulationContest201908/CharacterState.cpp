@@ -174,6 +174,13 @@ void Character_Attack::SendStringMessage(string str)
 	}
 }
 
+Character_CreateTower::Character_CreateTower(Character* _character)
+	: Character_State(_character)
+{
+	stateName = "CreateTower";
+	character->animator->SetNowAnime("Move");
+}
+
 void Character_CreateTower::Update()
 {
 	Vector2 moveVector = { 0, 0 };
