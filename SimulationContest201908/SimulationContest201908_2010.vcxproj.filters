@@ -105,6 +105,12 @@
     <Filter Include="GameObject\Character\Worker">
       <UniqueIdentifier>{16900132-e2ef-4125-b56a-892d2703c5c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\UI\CreateTower">
+      <UniqueIdentifier>{51ea4f4f-1150-46d6-8f9e-9f1d1d5091f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Character\Tower">
+      <UniqueIdentifier>{a69795d3-014c-4915-9b83-9b762b98e20d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -257,6 +263,12 @@
     <ClCompile Include="Worker.cpp">
       <Filter>GameObject\Character\Worker</Filter>
     </ClCompile>
+    <ClCompile Include="CreateTower.cpp">
+      <Filter>GameObject\UI\CreateTower</Filter>
+    </ClCompile>
+    <ClCompile Include="Tower.cpp">
+      <Filter>GameObject\Character\Tower</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -355,6 +367,12 @@
     </ClInclude>
     <ClInclude Include="Worker.h">
       <Filter>GameObject\Character\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateTower.h">
+      <Filter>GameObject\UI\CreateTower</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower.h">
+      <Filter>GameObject\Character\Tower</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

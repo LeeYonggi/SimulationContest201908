@@ -2,6 +2,8 @@
 #include "CharacterState.h"
 
 #include "Character.h"
+#include "Tower.h"
+#include "Worker.h"
 
 
 Character_Idle::Character_Idle(Character* _character) 
@@ -74,8 +76,6 @@ Character_Move::Character_Move(bool _isDirectAttack, Character* _character)
 
 void Character_Move::Update()
 {
-	if (character->tag == GameObject::PLAYER)
-		int a = 10;
 	Vector2 moveVector = { 0, 0 };
 	
 	moveVector = character->targetPos - Vector2(character->pos);
@@ -172,4 +172,48 @@ void Character_Attack::SendStringMessage(string str)
 			character->ChangeState(new Character_Move(true, character));
 		return;
 	}
+}
+
+void Character_CreateTower::Update()
+{
+	Vector2 moveVector = { 0, 0 };
+
+	if (Vec2Distance(Vector2(character->pos), character->targetPos) < targetCircle)
+	{
+		Worker* worker = static_cast<Worker*>(character);
+		
+		if(worker->gun->animator->GetNowAnimeName() != "Attack")
+			worker->gun->animator->SetNowAnime("Attack");
+		else if (worker->gun->animator->GetFrameEnd())
+		{
+			Tower* tower = new Tower();
+			OBJECTMANAGER->AddObject(GameObject::PLAYER, tower);
+			tower->pos.x = character->pos.x;
+			tower->pos.y = character->pos.y;
+			character->pos.y -= 40;
+			worker->gun->animator->SetNowAnime("Idle");
+			character->ChangeState(new Character_Idle(character));
+		}
+		return;
+	}
+
+	moveVector = character->targetPos - Vector2(character->pos);
+	D3DXVec2Normalize(&moveVector, &moveVector);
+
+	if (moveVector.x < 0)
+		character->dirVector.x = -1;
+	else
+		character->dirVector.x = 1;
+
+	character->pos.x += moveVector.x * ELTime * character->moveSpeed;
+	character->pos.y += moveVector.y * ELTime * character->moveSpeed;
+
+	if (character->CharacterCollision() == "CollisionStack")
+	{
+		targetCircle += 1;
+	}
+}
+
+void Character_CreateTower::SendStringMessage(string str)
+{
 }

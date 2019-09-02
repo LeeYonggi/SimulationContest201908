@@ -258,7 +258,7 @@ bool Bullet::BulletCollision()
 			Character* character = static_cast<Character*>(obj);
 			character->CharacterAttacked(damage, startVector);
 			DamageFont* damageFont = new DamageFont(Vector2(pos), damage);
-			OBJECTMANAGER->AddObject(UI, damageFont);
+			OBJECTMANAGER->AddObject(OBJ_UI, damageFont);
 			fireHitTime = 0.5f;
 			return true;
 		}

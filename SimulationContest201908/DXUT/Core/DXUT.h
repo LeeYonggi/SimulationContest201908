@@ -79,6 +79,7 @@
 #include <list>
 #include <iostream>
 #include <random>
+#include <functional>
 
 using namespace std;
 

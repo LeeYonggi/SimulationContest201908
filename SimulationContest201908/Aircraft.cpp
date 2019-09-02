@@ -2,6 +2,7 @@
 #include "Aircraft.h"
 
 #include "Bullet.h"
+#include "Effect.h"
 
 void Aircraft::Init()
 {
@@ -24,6 +25,8 @@ void Aircraft::Init()
 	moveRadar = 200.0f;
 	attackRadar = 150.0f;
 	hp = 100;
+	shadow->scale = { 4, 4 };
+	isFly = true;
 
 	shadowPivot = mainTexture->info.Height;
 	pos.z = -1;
@@ -59,8 +62,6 @@ void Aircraft::CharacterAttack()
 		return;
 	}
 
-	//if (animator->GetFrameEnd())
-	//	animator->SetNowAnime("Attack");
 	if (attackDelay < 0.0f)
 	{
 		Bullet* bullet = new Bullet(Bullet::LASER_START, targetObject);

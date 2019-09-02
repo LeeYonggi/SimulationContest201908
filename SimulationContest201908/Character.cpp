@@ -33,7 +33,8 @@ void Character::Update()
 {
 	animator->Update();
 
-	state->Update();
+	if(state)
+		state->Update();
 
 	if (dirVector.x < 0)
 		flip.first = true;
@@ -43,7 +44,7 @@ void Character::Update()
 	if (tag == ENEMY)
 		renderActive = ForgCheck();
 
-	if (hp < 1 && state->stateName != "Die")
+	if (state && hp < 1 && state->stateName != "Die")
 	{
 		ChangeState(new Character_Die(this));
 		if (isSelect)
@@ -121,6 +122,8 @@ string Character::CharacterCollision()
 			str = "CollisionStack";
 		}
 	}
+
+	if (isFly) return str;
 
 	auto character1 = OBJECTMANAGER->GetObjectList(PLAYER);
 

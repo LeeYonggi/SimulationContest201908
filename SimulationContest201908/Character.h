@@ -29,6 +29,7 @@ public:
 	float characterTime = 0.0f;
 	bool isMoveIdle = false;
 	bool isSelect = false;
+	bool isFly = false;
 
 public:
 	// GameObject을(를) 통해 상속됨

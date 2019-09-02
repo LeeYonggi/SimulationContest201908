@@ -13,6 +13,7 @@ Effect::Effect(Animation* anime, float destroyTime)
 
 Effect::~Effect()
 {
+	SAFE_DELETE(animator);
 }
 
 void Effect::Init()

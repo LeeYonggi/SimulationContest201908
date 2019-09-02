@@ -34,6 +34,7 @@ void Tank::Init()
 	moveRadar = 250.0f;
 	attackRadar = 250.0f;
 	shadowPivot = mainTexture->info.Height * 0.5f;
+	shadow->scale = {3, 3};
 
 	radius = 30.0f;
 

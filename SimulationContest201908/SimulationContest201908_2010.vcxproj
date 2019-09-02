@@ -392,6 +392,7 @@
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CharacterState.cpp" />
+    <ClCompile Include="CreateTower.cpp" />
     <ClCompile Include="DamageFont.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Firebat.cpp" />
@@ -407,6 +408,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Soldier.cpp" />
     <ClCompile Include="Tank.cpp" />
+    <ClCompile Include="Tower.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Worker.cpp" />
@@ -417,6 +419,7 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharacterState.h" />
+    <ClInclude Include="CreateTower.h" />
     <ClInclude Include="DamageFont.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Firebat.h" />
@@ -440,6 +443,7 @@
     <ClInclude Include="Soldier.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tank.h" />
+    <ClInclude Include="Tower.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Worker.h" />

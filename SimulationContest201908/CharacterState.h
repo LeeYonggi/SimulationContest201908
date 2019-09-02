@@ -100,3 +100,26 @@ public:
 	// Character_State을(를) 통해 상속됨
 	virtual void SendStringMessage(string str) override;
 };
+
+class Character_CreateTower
+	: public Character_State
+{
+public:
+	Character_CreateTower(Character* _character)
+		: Character_State(_character)
+	{
+		stateName = "CreateTower";
+	}
+	virtual ~Character_CreateTower()
+	{
+
+	}
+
+private:
+	float targetCircle = 10.0f;
+
+public:
+	// Character_State을(를) 통해 상속됨
+	virtual void Update() override;
+	virtual void SendStringMessage(string str) override;
+};

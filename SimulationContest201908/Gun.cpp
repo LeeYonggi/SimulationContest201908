@@ -36,7 +36,6 @@ void Gun::Update()
 
 	pos.x = pivot.x + character->pos.x + character->dirVector.x * distance;
 	pos.y = pivot.y + character->pos.y + character->dirVector.y * distance;
-	pos.z = 0;
 	if (character->dirVector.x < 0)
 		flip.second = true;
 	else

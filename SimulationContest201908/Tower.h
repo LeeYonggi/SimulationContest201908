@@ -1,23 +1,15 @@
 #pragma once
 #include "Character.h"
-
-class UI;
-class Worker :
+class Tower :
 	public Character
 {
-public:
-	Worker();
-	virtual ~Worker();
-
 private:
-	float attackDelay = 1.0f;
-	UI* buildUI = nullptr;
-	bool isMakeTower = false;
-
-public:
 	Gun* gun = nullptr;
+	float attackDelay = 0.5f;
+	float buildDelay = 0.0f;
 
 public:
+	// GameObject을(를) 통해 상속됨
 	virtual void Init();
 	virtual void Update();
 	virtual void Render();
@@ -26,7 +18,7 @@ public:
 public:
 	// Character을(를) 통해 상속됨
 	virtual void CharacterAttack() override;
-	void MakeTower(Vector2 targetPos);
+	virtual void CharacterDie();
 
 };
 

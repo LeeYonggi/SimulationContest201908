@@ -22,7 +22,7 @@ public:
 		PLAYER_BULLET,
 		ENEMY_BULLET,
 		EFFECT,
-		UI,
+		OBJ_UI,
 		MOUSE_CONTROLL,
 		END
 	};

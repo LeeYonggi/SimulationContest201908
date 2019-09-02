@@ -23,7 +23,7 @@ void GameOperator::Init()
 	animator->GetAnime("Talk")->animeSpeed = 5.0f;
 	animator->SetNowAnime("Talk");
 
-	sbubble = OBJECTMANAGER->AddObject(GameObject::UI, new SBubble());
+	sbubble = OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new SBubble());
 	sbubble->active = true;
 	sbubble->SetAnime("Open");
 
@@ -60,6 +60,7 @@ void GameOperator::SpeechInit()
 	{
 	case STAGE_1:
 		speech.push_back(L"대장, 로봇들이 부산역까지 침공하고 있는 상태입니다.\n 로봇들을 파괴하며 전진해주세요.");
+		
 		break;
 	case STAGE_2:
 		

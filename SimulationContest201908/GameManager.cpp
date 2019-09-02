@@ -60,8 +60,8 @@ void GameManager::Release()
 void GameManager::Stage1Init()
 {
 	OBJECTMANAGER->AddObject(GameObject::BACKGROUND1, new Map());
-	OBJECTMANAGER->AddObject(GameObject::UI, new GameUI());
-	oper = OBJECTMANAGER->AddObject(GameObject::UI, new GameOperator());
+	OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new GameUI());
+	oper = OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new GameOperator());
 	oper->SpeechChange(0);
 
 	for (int i = 0; i < 3; i++)
@@ -69,7 +69,7 @@ void GameManager::Stage1Init()
 		for (int j = 0; j < 3 + i % 2; j++)
 		{
 			Vector2 pivot = Vector2(-500 - (i % 2 * 30.0f), -360);
-			GameObject* obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Worker());
+			GameObject* obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Soldier());
 			obj->pos = { pivot.x + j * 60, pivot.y + i * 60, 0 };
 		}
 	}
@@ -100,8 +100,8 @@ void GameManager::Stage1Init()
 void GameManager::Stage2Init()
 {
 	OBJECTMANAGER->AddObject(GameObject::BACKGROUND1, new Map());
-	OBJECTMANAGER->AddObject(GameObject::UI, new GameUI());
-	oper = OBJECTMANAGER->AddObject(GameObject::UI, new GameOperator());
+	OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new GameUI());
+	oper = OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new GameOperator());
 	//oper->SpeechChange(0);
 
 	Vector2 pivot = Vector2(-200, 100);
@@ -110,6 +110,8 @@ void GameManager::Stage2Init()
 
 
 	OBJECTMANAGER->AddObject(GameObject::PLAYER, new Aircraft());
+	obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Worker());
+	obj->pos = {-200, -200, 0};
 
 	CAMERAMANAGER->pos = { -320, -320, -10 };
 	CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, { 960, 540 });
