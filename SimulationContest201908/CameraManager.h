@@ -17,11 +17,14 @@ public:
 	Vector2 zoomSize = { 0, 0 };
 	pair<bool, bool> isCameraZoom = make_pair(false, false);
 	float cameMoveSpeed = 0.05f;
+	float time = 0.0f;
 
 public:
 	void Init();
+	void Update();
 	void ViewSetting();
 	void SetCameraZoomPos(Vector2 value, Vector2 zoomSize);
+	void ShakeCamera(float time);
 
 };
 

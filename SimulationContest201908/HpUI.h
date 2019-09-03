@@ -1,14 +1,17 @@
 #pragma once
 #include "UI.h"
-class SBubble :
+
+
+class HpUI :
 	public UI
 {
 public:
-	SBubble();
-	virtual ~SBubble();
+	HpUI(Character* character);
+	virtual ~HpUI();
 
 private:
-	Animator* animator = nullptr;
+	Character* character = nullptr;
+	Texture* hpTexture = nullptr;
 
 public:
 	// GameObject을(를) 통해 상속됨
@@ -16,12 +19,5 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void Release() override;
-
-public:
-	void SetAnime(string str) 
-	{
-		animator->SetNowAnime(str); 
-		animator->SetNowFrame(0);
-	}
 };
 

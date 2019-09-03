@@ -9,10 +9,7 @@ void Soldier::Init()
 	if (tag == PLAYER)
 		PlayerInit();
 	else if (tag == ENEMY)
-	{
 		EnemyInit();
-		hp = 20;
-	}
 	ChangeState(new Character_Idle(this));
 
 	gun = new Gun(RESOURCEMANAGER->AddAnimeTexture("Character/gunner/effect/effect%d.png", 1, 7),
@@ -26,6 +23,8 @@ void Soldier::Init()
 	moveRadar = 200.0f;
 	attackRadar = 150.0f;
 	shadowPivot = mainTexture->info.Height * 0.5f;
+
+	Character::Init();
 }
 
 void Soldier::Update()
@@ -101,6 +100,8 @@ void Soldier::PlayerInit()
 	animator->AddAnime("Die", new Animation(die, true));
 
 	animator->SetNowAnime("Idle");
+
+	hp = 100;
 }
 
 void Soldier::EnemyInit()
@@ -118,4 +119,6 @@ void Soldier::EnemyInit()
 	animator->AddAnime("Die", new Animation(die, true));
 
 	animator->SetNowAnime("Idle");
+
+	hp = 130;
 }

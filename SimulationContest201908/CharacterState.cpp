@@ -4,7 +4,8 @@
 #include "Character.h"
 #include "Tower.h"
 #include "Worker.h"
-
+#include "HpUI.h"
+#include "Map.h"
 
 Character_Idle::Character_Idle(Character* _character) 
 	: Character_State(_character)
@@ -24,8 +25,17 @@ void Character_Idle::Update()
 		if (time < 0.0f)
 		{
 			Vector2 temp;
+			Vector2 limit;
+			limit.x = (Map::nowMap->mainTexture->info.Width * 0.5f);
+			limit.y = (Map::nowMap->mainTexture->info.Height * 0.5f);
 			temp.x = character->pos.x + RandomNumber(-50, 50);
 			temp.y = character->pos.y + RandomNumber(-50, 50);
+			if (temp.x > limit.x)
+				int a = 10;
+			if (temp.y > limit.y)
+				int a = 10;
+			temp.x = min(max(temp.x, -limit.x), limit.x);
+			temp.y = min(max(temp.y, -limit.y), limit.y);
 			if (WallCollision(Vector2(temp), Vector2(20, 20)))
 			{
 				moveCount += 1;
@@ -131,6 +141,8 @@ Character_Die::Character_Die(Character* _character)
 {
 	character->lightTexture = nullptr;
 	stateName = "Die";
+	if (character->hpUI)
+		character->hpUI->destroy = true;
 }
 
 void Character_Die::Update()

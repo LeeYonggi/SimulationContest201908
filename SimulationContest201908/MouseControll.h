@@ -29,6 +29,7 @@ public:
 	void MoveObject();
 	void CameraControll();
 	void AttackObject();
+	void SelectAll();
 public:
 	void RemoveSelectObject(Character* character);
 };

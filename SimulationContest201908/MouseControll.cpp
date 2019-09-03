@@ -41,6 +41,7 @@ void MouseControll::Update()
 	{
 		MoveObject();
 	}
+
 	if (isControll)
 		CameraControll();
 	if (INPUTMANAGER->IsKeyDown('1'))
@@ -160,6 +161,20 @@ void MouseControll::AttackObject()
 	}
 	targetCharacter = nullptr;
 	INPUTMANAGER->SetAttack(false);
+}
+
+void MouseControll::SelectAll()
+{
+	selectList.clear();
+	auto iter = OBJECTMANAGER->GetObjectList(PLAYER);
+
+	for (auto obj : *iter)
+	{
+		Character* character = static_cast<Character*>(obj);
+
+		selectList.push_back(character);
+		character->isSelect = true;
+	}
 }
 
 void MouseControll::RemoveSelectObject(Character* character)

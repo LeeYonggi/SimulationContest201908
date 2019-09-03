@@ -12,7 +12,16 @@ CameraManager::~CameraManager()
 
 void CameraManager::Init()
 {
+}
 
+void CameraManager::Update()
+{
+	if (time > 0.0f)
+	{
+		pos.x += RandomNumber(-5, 5) * 0.1f;
+		pos.y += RandomNumber(-5, 5) * 0.1f;
+	}
+	time -= ELTime;
 }
 
 void CameraManager::ViewSetting()
@@ -55,4 +64,10 @@ void CameraManager::SetCameraZoomPos(Vector2 value, Vector2 zoomSize)
 	isCameraZoom.first = true;
 	pastZoomPos = Vector2(pos);
 	this->zoomSize = zoomSize;
+}
+
+void CameraManager::ShakeCamera(float time)
+{
+	this->time = time;
+
 }

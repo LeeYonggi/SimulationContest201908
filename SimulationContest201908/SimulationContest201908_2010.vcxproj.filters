@@ -111,6 +111,9 @@
     <Filter Include="GameObject\Character\Tower">
       <UniqueIdentifier>{a69795d3-014c-4915-9b83-9b762b98e20d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\UI\HpUI">
+      <UniqueIdentifier>{3cf2111c-0a7c-4f70-b9c4-be44f71597bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -269,6 +272,9 @@
     <ClCompile Include="Tower.cpp">
       <Filter>GameObject\Character\Tower</Filter>
     </ClCompile>
+    <ClCompile Include="HpUI.cpp">
+      <Filter>GameObject\UI\HpUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -373,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="Tower.h">
       <Filter>GameObject\Character\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="HpUI.h">
+      <Filter>GameObject\UI\HpUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

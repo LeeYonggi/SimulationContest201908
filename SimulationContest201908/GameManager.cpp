@@ -37,6 +37,22 @@ void GameManager::Init()
 
 void GameManager::Update()
 {
+	switch (stage)
+	{
+	case STAGE_1:
+		if (LifeCount(GameObject::ENEMY) == 10)
+		{
+			if (oper)
+				oper->SpeechChange(1);
+		}
+		break;
+	case STAGE_2:
+		break;
+	case STAGE_3:
+		break;
+	default:
+		break;
+	}
 	if (INPUTMANAGER->IsKeyDown(VK_F1))
 	{
 		SCENEMANAGER->AddScene(new IngameScene());
@@ -104,7 +120,7 @@ void GameManager::Stage2Init()
 	OBJECTMANAGER->AddObject(GameObject::BACKGROUND1, new Map());
 	OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new GameUI());
 	oper = OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new GameOperator());
-	//oper->SpeechChange(0);
+	oper->SpeechChange(0);
 
 	Vector2 pivot = Vector2(-200, 100);
 	GameObject* obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Soldier());
@@ -121,4 +137,16 @@ void GameManager::Stage2Init()
 
 void GameManager::Stage3Init()
 {
+}
+
+int GameManager::LifeCount(GameObject::GAMEOBJECT_TAG tag)
+{
+	auto iter = OBJECTMANAGER->GetObjectList(tag);
+	int life = 0;
+	for (auto obj : *iter)
+	{
+		if(static_cast<Character*>(obj)->hp > 0)
+			life += 1;
+	}
+	return life;
 }

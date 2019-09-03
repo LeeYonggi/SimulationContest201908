@@ -54,6 +54,8 @@ void Worker::Init()
 	gun->pivot = { 0, 0 };
 	gun->distance = 20.0f;
 	gun->animator->GetAnime("Attack")->animeSpeed = 15.0f;
+
+	Character::Init();
 }
 
 void Worker::Update()

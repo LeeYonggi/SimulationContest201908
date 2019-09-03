@@ -41,7 +41,9 @@ void Tank::Init()
 
 	ChangeState(new Character_Idle(this));
 
-	hp = 100;
+	hp = 200;
+
+	Character::Init();
 }
 
 void Tank::Update()

@@ -30,10 +30,9 @@ void Bullet::Init()
 		radius = 5.0f;
 
 		if (tag == ENEMY_BULLET)	
-			damage = 5;
+			damage = 3;
 		else
 			damage = 10;
-
 
 		startVector = Vector2(pos);
 		break;
@@ -53,7 +52,7 @@ void Bullet::Init()
 
 		radius = 5.0f;
 
-		damage = 5;
+		damage = 1;
 
 		growFire = RandomNumber(10, 30) * 0.02f;
 
@@ -155,6 +154,7 @@ void Bullet::Update()
 			Effect* effect = new Effect(anime, 0.5f);
 			OBJECTMANAGER->AddObject(EFFECT, effect);
 			effect->pos = pos;
+			CAMERAMANAGER->ShakeCamera(0.5f);
 		}
 		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
 
@@ -186,6 +186,7 @@ void Bullet::Update()
 			Effect* effect = new Effect(anime, 0.7f);
 			OBJECTMANAGER->AddObject(EFFECT, effect);
 			effect->pos = pos;
+			CAMERAMANAGER->ShakeCamera(0.5f);
 		}
 
 		pos.x += moveVector.x * ELTime * bulletSpeed;
@@ -204,7 +205,6 @@ void Bullet::Update()
 			effect->pos = pos;
 			effect->moveVector = -moveVector;
 			effect->moveSpeed = 100;
-			OBJECTMANAGER->AddObject(EFFECT, effect);
 		}
 		
 		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
@@ -232,6 +232,7 @@ void Bullet::Update()
 			OBJECTMANAGER->AddObject(EFFECT, effect);
 			effect->pos = pos;
 			effect->scale = {1.5, 1.5};
+			CAMERAMANAGER->ShakeCamera(0.5f);
 		}
 		scale.y = Lerp(scale.y, 1.0f, 0.2f);
 		break;

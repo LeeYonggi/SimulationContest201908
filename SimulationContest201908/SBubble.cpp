@@ -35,7 +35,7 @@ void SBubble::Update()
 
 void SBubble::Render()
 {
-	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, rotate, color);
+	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, { 1, 1 }, rotate, color);
 }
 
 void SBubble::Release()

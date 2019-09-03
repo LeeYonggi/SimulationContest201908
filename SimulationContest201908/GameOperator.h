@@ -17,6 +17,7 @@ private:
 	float time = 0.0f;
 	float textSpeed = 10.0f;
 	bool speechActive = false;
+	vector<float> timeLimit;
 
 public:
 	// GameObject을(를) 통해 상속됨

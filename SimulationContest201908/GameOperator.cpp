@@ -33,7 +33,8 @@ void GameOperator::Init()
 void GameOperator::Update()
 {
 	animator->Update();
-	if (time > 50)
+	if (speechActive == false) return;
+	if (time > timeLimit[nowSpeech])
 		CloseBubble();
 	time += ELTime * textSpeed;
 }
@@ -46,7 +47,7 @@ void GameOperator::Render()
 		str = str.substr(0, (int)min((int)time, str.size()));
 		RENDERMANAGER->DrawFont(str, "맑은 고딕", Vector2(300, 520), 35, color);
 	}
-	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, rotate, color);
+	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, { 1, 1 }, rotate, color);
 }
 
 void GameOperator::Release()
@@ -60,10 +61,14 @@ void GameOperator::SpeechInit()
 	{
 	case STAGE_1:
 		speech.push_back(L"대장, 로봇들이 부산역까지 침공하고 있는 상태입니다.\n 로봇들을 파괴하며 전진해주세요.");
-		
+		timeLimit.push_back(50);
+		speech.push_back(L"대장, 로봇들이 얼마 남지 않았습니다.\n 힘을 내요!");
+		timeLimit.push_back(50);
 		break;
 	case STAGE_2:
-		
+		speech.push_back(L"로봇들이 앞 길거리를 점령하고 있는 상태입니다.\n 로봇들을 파괴해 탈환당한 길거리를 되찾아 오세요.");
+		timeLimit.push_back(65);
+
 		break;
 	case STAGE_3:
 		break;
@@ -74,11 +79,12 @@ void GameOperator::SpeechInit()
 
 void GameOperator::SpeechChange(int num)
 {
-	nowSpeech = num;
 	time = 0;
 	sbubble->SetAnime("Open");
 	sbubble->active = true;
 	speechActive = true;
+	animator->SetNowAnime("Talk");
+	nowSpeech = num;
 }
 
 void GameOperator::CloseBubble()

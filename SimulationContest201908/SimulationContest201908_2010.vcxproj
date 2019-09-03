@@ -400,6 +400,7 @@
     <ClCompile Include="GameOperator.cpp" />
     <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="Gun.cpp" />
+    <ClCompile Include="HpUI.cpp" />
     <ClCompile Include="IngameScene.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -428,6 +429,7 @@
     <ClInclude Include="GameOperator.h" />
     <ClInclude Include="GameUI.h" />
     <ClInclude Include="Gun.h" />
+    <ClInclude Include="HpUI.h" />
     <ClInclude Include="IngameScene.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="MainProc.h" />

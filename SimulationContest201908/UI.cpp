@@ -38,7 +38,7 @@ void UI::Update()
 
 void UI::Render()
 {
-	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, rotate, color);
+	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, { 1, 1 }, rotate, color);
 }
 
 void UI::Release()

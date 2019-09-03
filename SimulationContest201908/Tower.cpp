@@ -31,7 +31,11 @@ void Tower::Init()
 	shadowPivot = mainTexture->info.Height * 0.3f;
 	pos.z = 0.0f;
 
+	hp = 200;
+
 	shadow->scale = {3, 3};
+
+	Character::Init();
 }
 
 void Tower::Update()

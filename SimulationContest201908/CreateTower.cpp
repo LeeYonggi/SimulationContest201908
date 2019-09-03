@@ -35,7 +35,7 @@ void CreateTower::Update()
 
 void CreateTower::Render()
 {
-	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, rotate, color);
+	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, {1, 1}, rotate, color);
 }
 
 void CreateTower::Release()

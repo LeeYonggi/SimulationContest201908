@@ -24,13 +24,15 @@ void Aircraft::Init()
 	moveSpeed = 120.0f;
 	moveRadar = 200.0f;
 	attackRadar = 150.0f;
-	hp = 100;
+	hp = 200;
 	shadow->scale = { 4, 4 };
 	isFly = true;
 	moveSpeed = 140.0f;
 
 	shadowPivot = mainTexture->info.Height;
 	pos.z = -1;
+
+	Character::Init();
 }
 
 void Aircraft::Update()

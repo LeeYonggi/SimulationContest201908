@@ -28,6 +28,8 @@ public:
 	void Stage2Init();
 	void Stage3Init();
 
+	int LifeCount(GameObject::GAMEOBJECT_TAG tag);
+
 public:
 	GAME_STAGE GetStage() { return stage; }
 	void SetStage(GAME_STAGE value) { stage = value; }

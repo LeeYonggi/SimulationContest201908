@@ -3,6 +3,7 @@
 
 #include "CharacterState.h"
 
+class HpUI;
 class Effect;
 class Character :
 	public GameObject
@@ -18,6 +19,9 @@ protected:
 
 public:
 	int hp = 50;
+	int maxHp = 50;
+	HpUI* hpUI = nullptr;
+	float hpPivot = -50.0f;
 	GameObject* targetObject = nullptr;
 	Animator *animator = nullptr;
 	Vector2 dirVector = { 1, 0 };

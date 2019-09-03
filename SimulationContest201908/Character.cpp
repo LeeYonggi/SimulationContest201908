@@ -3,6 +3,7 @@
 
 #include "MouseControll.h"
 #include "Effect.h"
+#include "HpUI.h"
 
 Character::Character()
 {
@@ -16,6 +17,7 @@ Character::Character()
 	shadow->pos.x = pos.x;
 	shadow->pos.y = pos.y + shadowPivot;
 	shadow->pos.z = 1;
+
 }
 
 Character::~Character()
@@ -27,6 +29,9 @@ Character::~Character()
 
 void Character::Init()
 {
+	hpUI = new HpUI(this);
+	OBJECTMANAGER->AddObject(OBJ_UI, hpUI);
+	maxHp = hp;
 }
 
 void Character::Update()

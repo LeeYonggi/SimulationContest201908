@@ -43,9 +43,11 @@ void Firebat::Init()
 	radius = 25.0f;
 	shadowPivot = mainTexture->info.Height * 0.5f;
 
-	hp = 30;
+	hp = 100;
 
 	isMoveIdle = true;
+
+	Character::Init();
 }
 
 void Firebat::Update()

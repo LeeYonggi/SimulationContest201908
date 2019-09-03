@@ -15,6 +15,8 @@ void MainProc::Update()
 	OBJECTMANAGER->Update();
 
 	INPUTMANAGER->Update();
+
+	CAMERAMANAGER->Update();
 }
 
 void MainProc::Render()

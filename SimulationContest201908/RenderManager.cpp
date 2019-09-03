@@ -107,7 +107,7 @@ void RenderManager::DrawImage(Texture* texture, Vector3 pos, Vector2 scale, floa
 	DEVICE->SetTexture(0, nullptr);
 }
 
-void RenderManager::DrawSprite(Texture* texture, Vector2 pos, Vector2 scale, float rotate, Color color)
+void RenderManager::DrawSprite(Texture* texture, Vector2 pos, Vector2 scale, Vector2 length, float rotate, Color color)
 {
 	Matrix matW, matS, matR, matT;
 
@@ -122,8 +122,9 @@ void RenderManager::DrawSprite(Texture* texture, Vector2 pos, Vector2 scale, flo
 	sprite->Begin(D3DXSPRITE_ALPHABLEND);
 
 	Vector3 center = { texture->info.Width * 0.5f, texture->info.Height * 0.5f, 0 };
+	RECT re = { 0, 0, texture->info.Width * length.x, texture->info.Height * length.y };
 
-	sprite->Draw(texture->tex, nullptr, &center, nullptr, color);
+	sprite->Draw(texture->tex, &re, &center, nullptr, color);
 	sprite->End();
 }
 

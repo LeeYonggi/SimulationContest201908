@@ -42,7 +42,7 @@ void GameUI::Render()
 {
 	RENDERMANAGER->DrawSprite(miniMapTexture, Vector2(128, 613));
 	MiniIconRender();
-	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, rotate, color);
+	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, { 1, 1 }, rotate, color);
 }
 
 void GameUI::Release()

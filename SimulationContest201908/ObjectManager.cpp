@@ -127,7 +127,7 @@ void ObjectManager::LightingMapRender(float alpha)
 		D3DCOLOR_ARGB(0, 0, 0, 0), 1, 0);
 
 	RENDERMANAGER->DrawSprite(darkTexture, { (float)SCREEN_X * 0.5f, (float)SCREEN_Y * 0.5f },
-		{1, 1}, 0, Color(1, 1, 1, alpha));
+		{1, 1}, { 1, 1 }, 0, Color(1, 1, 1, alpha));
 
 	DEVICE->SetRenderTarget(0, backBufferSurface);
 
