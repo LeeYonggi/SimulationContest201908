@@ -10,6 +10,8 @@ HpUI::HpUI(Character* character)
 	else
 		hpTexture = RESOURCEMANAGER->AddTexture("UI/Hp/HpEnemy.png");
 	this->character = character;
+	scale.y = 0.7f;
+	color.a = 0.6f;
 }
 
 HpUI::~HpUI()
@@ -30,8 +32,8 @@ void HpUI::Render()
 	Vector2 length = Vector2(((float)character->hp / (float)character->maxHp), 1);
 	Vector2 tempPos = ScreenToWorld(Vector2(character->pos));
 	tempPos.y += character->hpPivot;
-	RENDERMANAGER->DrawSprite(hpTexture, tempPos, scale, length);
-	RENDERMANAGER->DrawSprite(mainTexture, tempPos, scale);
+	RENDERMANAGER->DrawSprite(hpTexture, tempPos, scale, length, rotate, color);
+	RENDERMANAGER->DrawSprite(mainTexture, tempPos, scale, {1, 1}, rotate, color);
 }
 
 void HpUI::Release()

@@ -55,12 +55,12 @@ void GameManager::Update()
 	}
 	if (INPUTMANAGER->IsKeyDown(VK_F1))
 	{
-		SCENEMANAGER->AddScene(new IngameScene());
+		SCENEMANAGER->AddScene(new IngameScene(), true);
 		SetStage(STAGE_1);
 	}
 	if (INPUTMANAGER->IsKeyDown(VK_F2))
 	{
-		SCENEMANAGER->AddScene(new IngameScene());
+		SCENEMANAGER->AddScene(new IngameScene(), true);
 		SetStage(STAGE_2);
 	}
 }

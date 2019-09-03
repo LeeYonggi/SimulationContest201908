@@ -5,7 +5,7 @@
 
 void MainProc::Init()
 {
-	SCENEMANAGER->AddScene(new IngameScene);
+	SCENEMANAGER->AddScene(new IngameScene, true);
 }
 
 void MainProc::Update()

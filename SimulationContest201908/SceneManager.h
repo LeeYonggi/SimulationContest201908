@@ -10,6 +10,9 @@ public:
 private:
 	Scene* nextScene = nullptr;
 	Scene* nowScene = nullptr;
+	bool isChangeEffect = false;
+	float time = 0.0f;
+	vector<Texture*> sceneTexture;
 
 public:
 	void Init();
@@ -17,8 +20,11 @@ public:
 	void Render();
 	void Release();
 
+private:
+	void SceneChange();
+
 public:
-	void AddScene(Scene *scene);
+	void AddScene(Scene *scene, bool isSceneEffect = false);
 
 };
 

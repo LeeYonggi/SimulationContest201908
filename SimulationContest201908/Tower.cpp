@@ -30,6 +30,7 @@ void Tower::Init()
 	attackRadar = 200;
 	shadowPivot = mainTexture->info.Height * 0.3f;
 	pos.z = 0.0f;
+	hpPivot = -150;
 
 	hp = 200;
 

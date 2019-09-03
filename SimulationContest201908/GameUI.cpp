@@ -31,6 +31,7 @@ void GameUI::Init()
 	default:
 		break;
 	}
+	mineralTexture = RESOURCEMANAGER->AddTexture("UI/resources.png");
 }
 
 void GameUI::Update()
@@ -43,6 +44,8 @@ void GameUI::Render()
 	RENDERMANAGER->DrawSprite(miniMapTexture, Vector2(128, 613));
 	MiniIconRender();
 	RENDERMANAGER->DrawSprite(mainTexture, Vector2(pos), scale, { 1, 1 }, rotate, color);
+	RENDERMANAGER->DrawSprite(mineralTexture, Vector2(1125, 50));
+	RENDERMANAGER->DrawFont(L"* " + to_wstring(GAMEMANAGER->mineralCount), "fixedsys", Vector2(1150, 40), 40);
 }
 
 void GameUI::Release()

@@ -16,6 +16,7 @@ private:
 
 public:
 	GameOperator* oper = nullptr;
+	int mineralCount = 0;
 
 public:
 	void Init();

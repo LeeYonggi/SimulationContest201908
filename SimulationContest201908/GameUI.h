@@ -11,6 +11,7 @@ public:
 
 private:
 	Texture* miniMapTexture = nullptr;
+	Texture* mineralTexture = nullptr;
 
 public:
 	// GameObject을(를) 통해 상속됨
