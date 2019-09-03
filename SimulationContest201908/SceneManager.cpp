@@ -18,10 +18,6 @@ void SceneManager::Init()
 
 void SceneManager::Update()
 {
-	if (nextScene)
-	{
-		SceneChange();
-	}
 	if (isChangeEffect)
 	{
 		time += 0.2f;
@@ -34,6 +30,8 @@ void SceneManager::Update()
 			SceneChange();
 		}
 	}
+	else if (nextScene)
+		SceneChange();
 	if(nowScene)
 		nowScene->Update();
 }
@@ -75,4 +73,5 @@ void SceneManager::AddScene(Scene* scene, bool isSceneEffect)
 {
 	nextScene = scene;
 	isChangeEffect = isSceneEffect;
+	time = 0.0f;
 }
