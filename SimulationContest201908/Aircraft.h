@@ -17,5 +17,8 @@ public:
 public:
 	// Character을(를) 통해 상속됨
 	virtual void CharacterAttack() override;
+
+	void PlayerInit();
+	void EnemyInit();
 };
 

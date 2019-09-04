@@ -95,6 +95,8 @@ string Character::CharacterCollision()
 {
 	auto back = OBJECTMANAGER->GetObjectList(BACKGROUND2);
 	string str = "NONE";
+	if (isFly)
+		return FlyCollision();
 
 	for (auto obj : *back)
 	{
@@ -128,8 +130,6 @@ string Character::CharacterCollision()
 		}
 	}
 
-	if (isFly) return str;
-
 	auto character1 = OBJECTMANAGER->GetObjectList(PLAYER);
 
 	if (tag == PLAYER)
@@ -137,6 +137,7 @@ string Character::CharacterCollision()
 
 	for (auto obj : *character1)
 	{
+		if (static_cast<Character*>(obj)->isFly == true) continue;
 		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius) &&
 			static_cast<Character*>(obj)->hp > 0)
 		{
@@ -155,6 +156,7 @@ string Character::CharacterCollision()
 	for (auto obj : *character2)
 	{
 		if (obj == this) continue;
+		if (static_cast<Character*>(obj)->isFly == true) continue;
 		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius) &&
 			static_cast<Character*>(obj)->hp > 0)
 		{
@@ -167,6 +169,50 @@ string Character::CharacterCollision()
 		}
 	}
 
+	return str;
+}
+
+string Character::FlyCollision()
+{
+	string str = "NONE";
+	auto character1 = OBJECTMANAGER->GetObjectList(PLAYER);
+
+	if (tag == PLAYER)
+		character1 = OBJECTMANAGER->GetObjectList(ENEMY);
+
+	for (auto obj : *character1)
+	{
+		if (static_cast<Character*>(obj)->isFly == false) continue;
+		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius) &&
+			static_cast<Character*>(obj)->hp > 0)
+		{
+			Vector2 dis = obj->pos - pos;
+			D3DXVec2Normalize(&dis, &dis);
+
+			pos.x -= dis.x * ELTime * moveSpeed;
+			pos.y -= dis.y * ELTime * moveSpeed;
+		}
+	}
+
+	auto character2 = OBJECTMANAGER->GetObjectList(ENEMY);
+	if (tag == PLAYER)
+		character2 = OBJECTMANAGER->GetObjectList(PLAYER);
+
+	for (auto obj : *character2)
+	{
+		if (obj == this) continue;
+		if (static_cast<Character*>(obj)->isFly == false) continue;
+		if (CircleCollision(Vector2(obj->pos), obj->radius, Vector2(pos), radius) &&
+			static_cast<Character*>(obj)->hp > 0)
+		{
+			Vector2 dis = obj->pos - pos;
+			D3DXVec2Normalize(&dis, &dis);
+
+			pos.x -= dis.x * ELTime * moveSpeed;
+			pos.y -= dis.y * ELTime * moveSpeed;
+			str = "CollisionStack";
+		}
+	}
 	return str;
 }
 

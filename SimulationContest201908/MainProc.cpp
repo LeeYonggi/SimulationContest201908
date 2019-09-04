@@ -2,10 +2,11 @@
 #include "MainProc.h"
 
 #include "IngameScene.h"
+#include "MainScene.h"
 
 void MainProc::Init()
 {
-	SCENEMANAGER->AddScene(new IngameScene, true);
+	SCENEMANAGER->AddScene(new MainScene, false);
 }
 
 void MainProc::Update()

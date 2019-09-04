@@ -14,22 +14,10 @@ Tank::~Tank()
 
 void Tank::Init()
 {
-	mainTexture = RESOURCEMANAGER->AddTexture("Character/tank/idle/tank1.png");
-
-	animator->AddAnime("Idle",
-		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/tank/idle/tank%d.png", 1, 4), true));
-
-	animator->AddAnime("Move",
-		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/tank/run/run%d.png", 1, 2), true));
-
-	animator->AddAnime("Attack",
-		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/tank/attack/attack%d.png", 1, 6), false));
-
-	vector<Texture*> die;
-	die.push_back(RESOURCEMANAGER->AddTexture("Character/dead/dead.png"));
-	animator->AddAnime("Die", new Animation(die, true));
-
-	animator->SetNowAnime("Idle");
+	if (tag == PLAYER)
+		PlayerInit();
+	else
+		EnemyInit();
 
 	moveRadar = 250.0f;
 	attackRadar = 250.0f;
@@ -122,4 +110,44 @@ void Tank::CharacterDie()
 	effect->scale = { 2, 2 };
 
 	isDieBomb = true;
+}
+
+void Tank::PlayerInit()
+{
+	mainTexture = RESOURCEMANAGER->AddTexture("Character/our_tank/idle/idle1.png");
+
+	animator->AddAnime("Idle",
+		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/our_tank/idle/idle%d.png", 1, 4), true));
+
+	animator->AddAnime("Move",
+		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/our_tank/run/run%d.png", 1, 2), true));
+
+	animator->AddAnime("Attack",
+		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/our_tank/attack/attack%d.png", 1, 6), false));
+
+	vector<Texture*> die;
+	die.push_back(RESOURCEMANAGER->AddTexture("Character/our_tank/dead/dead.png"));
+	animator->AddAnime("Die", new Animation(die, true));
+
+	animator->SetNowAnime("Idle");
+}
+
+void Tank::EnemyInit()
+{
+	mainTexture = RESOURCEMANAGER->AddTexture("Character/tank/idle/tank1.png");
+
+	animator->AddAnime("Idle",
+		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/tank/idle/tank%d.png", 1, 4), true));
+
+	animator->AddAnime("Move",
+		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/tank/run/run%d.png", 1, 2), true));
+
+	animator->AddAnime("Attack",
+		new Animation(RESOURCEMANAGER->AddAnimeTexture("Character/tank/attack/attack%d.png", 1, 6), false));
+
+	vector<Texture*> die;
+	die.push_back(RESOURCEMANAGER->AddTexture("Character/dead/dead.png"));
+	animator->AddAnime("Die", new Animation(die, true));
+
+	animator->SetNowAnime("Idle");
 }

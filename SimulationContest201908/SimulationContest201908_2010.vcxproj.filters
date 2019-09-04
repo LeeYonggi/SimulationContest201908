@@ -114,6 +114,12 @@
     <Filter Include="GameObject\UI\HpUI">
       <UniqueIdentifier>{3cf2111c-0a7c-4f70-b9c4-be44f71597bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Mineral">
+      <UniqueIdentifier>{f01d8b82-d26c-4c67-8d6d-26cb0c60daa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\MainScene">
+      <UniqueIdentifier>{9922fc71-99e0-48e5-aac5-2301ec196ecb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -275,6 +281,12 @@
     <ClCompile Include="HpUI.cpp">
       <Filter>GameObject\UI\HpUI</Filter>
     </ClCompile>
+    <ClCompile Include="Mineral.cpp">
+      <Filter>GameObject\Mineral</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>Scene\MainScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -382,6 +394,12 @@
     </ClInclude>
     <ClInclude Include="HpUI.h">
       <Filter>GameObject\UI\HpUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Mineral.h">
+      <Filter>GameObject\Mineral</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>Scene\MainScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

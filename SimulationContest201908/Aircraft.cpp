@@ -6,17 +6,10 @@
 
 void Aircraft::Init()
 {
-	mainTexture = RESOURCEMANAGER->AddTexture("Character/Aircraft/idle_move/idle1.png");
-
-	Animation* anime = new Animation(
-		RESOURCEMANAGER->AddAnimeTexture("Character/Aircraft/idle_move/idle%d.png", 1, 5), true);
-	animator->AddAnime("Idle", anime);
-	anime = new Animation(
-		RESOURCEMANAGER->AddAnimeTexture("Character/Aircraft/idle_move/idle%d.png", 1, 5), true);
-	animator->AddAnime("Move", anime);
-	anime = new Animation(
-		RESOURCEMANAGER->AddAnimeTexture("Character/Aircraft/attack/attack%d.png", 1, 6), false);
-	animator->AddAnime("Attack", anime);
+	if (tag == PLAYER)
+		PlayerInit();
+	else
+		EnemyInit();
 
 	ChangeState(new Character_Idle(this));
 
@@ -82,4 +75,38 @@ void Aircraft::CharacterAttack()
 		animator->SetNowAnime("Attack");
 		attackDelay = 1.0f;
 	}
+}
+
+void Aircraft::PlayerInit()
+{
+	mainTexture = RESOURCEMANAGER->AddTexture("Character/our_fighter/move/move1.png");
+
+	Animation* anime = new Animation(
+		RESOURCEMANAGER->AddAnimeTexture("Character/our_fighter/move/move%d.png", 1, 5), true);
+	animator->AddAnime("Idle", anime);
+	anime = new Animation(
+		RESOURCEMANAGER->AddAnimeTexture("Character/our_fighter/move/move%d.png", 1, 5), true);
+	animator->AddAnime("Move", anime);
+	anime = new Animation(
+		RESOURCEMANAGER->AddAnimeTexture("Character/our_fighter/attack/fighter%d.png", 1, 6), false);
+	animator->AddAnime("Attack", anime);
+
+	animator->SetNowAnime("Idle");
+}
+
+void Aircraft::EnemyInit()
+{
+	mainTexture = RESOURCEMANAGER->AddTexture("Character/Aircraft/idle_move/idle1.png");
+
+	Animation* anime = new Animation(
+		RESOURCEMANAGER->AddAnimeTexture("Character/Aircraft/idle_move/idle%d.png", 1, 5), true);
+	animator->AddAnime("Idle", anime);
+	anime = new Animation(
+		RESOURCEMANAGER->AddAnimeTexture("Character/Aircraft/idle_move/idle%d.png", 1, 5), true);
+	animator->AddAnime("Move", anime);
+	anime = new Animation(
+		RESOURCEMANAGER->AddAnimeTexture("Character/Aircraft/attack/attack%d.png", 1, 6), false);
+	animator->AddAnime("Attack", anime);
+
+	animator->SetNowAnime("Idle");
 }

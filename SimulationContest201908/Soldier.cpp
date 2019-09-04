@@ -19,7 +19,6 @@ void Soldier::Init()
 	gun->distance = 10.0f;
 	gun->animator->GetAnime("Attack")->animeSpeed = 15.0f;
 	radius = 20.0f;
-	moveSpeed = 120.0f;
 	moveRadar = 200.0f;
 	attackRadar = 150.0f;
 	shadowPivot = mainTexture->info.Height * 0.5f;
@@ -102,6 +101,7 @@ void Soldier::PlayerInit()
 	animator->SetNowAnime("Idle");
 
 	hp = 100;
+	moveSpeed = 130.0f;
 }
 
 void Soldier::EnemyInit()
@@ -121,4 +121,5 @@ void Soldier::EnemyInit()
 	animator->SetNowAnime("Idle");
 
 	hp = 130;
+	moveSpeed = 120.0f;
 }

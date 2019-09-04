@@ -27,6 +27,7 @@ void GameManager::Init()
 		Stage2Init();
 		break;
 	case STAGE_3:
+		Stage3Init();
 		break;
 	default:
 		break;
@@ -63,6 +64,12 @@ void GameManager::Update()
 		SCENEMANAGER->AddScene(new IngameScene(), true);
 		SetStage(STAGE_2);
 	}
+	if (INPUTMANAGER->IsKeyDown(VK_F3))
+	{
+		SCENEMANAGER->AddScene(new IngameScene(), true);
+		SetStage(STAGE_3);
+	}
+	time -= ELTime;
 }
 
 void GameManager::Render()
@@ -108,11 +115,11 @@ void GameManager::Stage1Init()
 			obj->pos = { pivot.x + j * 60, pivot.y + i * 60, 0 };
 		}
 	}
-	GameObject* obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Tank());
-	obj->pos = { 200, -400, 0 };
 
 	CAMERAMANAGER->pos = { -320, -320, -10 };
-	CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, { 960, 540 });
+	CAMERAMANAGER->SetCameraZoomPos({ -150, 350 }, { 960, 540 });
+
+	time = 300;
 }
 
 void GameManager::Stage2Init()
@@ -126,17 +133,71 @@ void GameManager::Stage2Init()
 	GameObject* obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Soldier());
 	obj->pos = { pivot.x, pivot.y, 0 };
 
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Soldier());
+			obj->pos = { -160.0f + i * 80.0f, -250 - j * 50.0f, 0 };
+		}
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Tank());
+		obj->pos = { -250.0f + i * 80.0f, -350, 0 };
+	}
 
-	OBJECTMANAGER->AddObject(GameObject::PLAYER, new Aircraft());
-	obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Worker());
-	obj->pos = {-200, -200, 0};
+	for (int i = 0; i < 3; i++)
+	{
+		obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Aircraft());
+		obj->pos = { -450.0f + i * 80.0f, -250, -1 };
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		obj = OBJECTMANAGER->AddObject(GameObject::PLAYER, new Aircraft());
+		obj->pos = { 290.0f + i * 80.0f, -250, -1 };
+	}
 
-	CAMERAMANAGER->pos = { -320, -320, -10 };
+	for (int i = 0; i < 5; i++)
+	{
+		for (int j = 0; j < 2; j++)
+		{
+			obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Firebat());
+			obj->pos = { -160.0f + i * 80.0f, 350 - j * 50.0f, 0 };
+		}
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Tank());
+		obj->pos = { -250.0f + i * 80.0f, 450, 0 };
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Aircraft());
+		obj->pos = { -450.0f + i * 80.0f, 350, -1 };
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		obj = OBJECTMANAGER->AddObject(GameObject::ENEMY, new Aircraft());
+		obj->pos = { 290.0f + i * 80.0f, 350, -1 };
+	}
+
+	CAMERAMANAGER->pos = { 0, -400, -10 };
 	CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, { 960, 540 });
+
+	time = 300;
 }
 
 void GameManager::Stage3Init()
 {
+	OBJECTMANAGER->AddObject(GameObject::BACKGROUND1, new Map());
+	OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new GameUI());
+	oper = OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new GameOperator());
+	//oper->SpeechChange(0);
+
+	CAMERAMANAGER->pos = { 0, -400, -10 };
+	CAMERAMANAGER->SetCameraZoomPos({ 0, 0 }, { 960, 540 });
 }
 
 int GameManager::LifeCount(GameObject::GAMEOBJECT_TAG tag)

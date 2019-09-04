@@ -24,7 +24,7 @@ void GameOperator::Init()
 	animator->SetNowAnime("Talk");
 
 	sbubble = OBJECTMANAGER->AddObject(GameObject::OBJ_UI, new SBubble());
-	sbubble->active = true;
+	sbubble->active = false;
 	sbubble->SetAnime("Open");
 
 	SpeechInit();

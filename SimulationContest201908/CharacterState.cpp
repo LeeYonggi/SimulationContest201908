@@ -6,6 +6,7 @@
 #include "Worker.h"
 #include "HpUI.h"
 #include "Map.h"
+#include "Mineral.h"
 
 Character_Idle::Character_Idle(Character* _character) 
 	: Character_State(_character)
@@ -143,6 +144,8 @@ Character_Die::Character_Die(Character* _character)
 	stateName = "Die";
 	if (character->hpUI)
 		character->hpUI->destroy = true;
+	if(character->tag == GameObject::ENEMY)
+		OBJECTMANAGER->AddObject(GameObject::EFFECT, new Mineral(Vector2(character->pos)));
 }
 
 void Character_Die::Update()

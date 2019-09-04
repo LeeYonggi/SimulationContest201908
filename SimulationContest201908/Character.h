@@ -34,7 +34,7 @@ public:
 	bool isMoveIdle = false;
 	bool isSelect = false;
 	bool isFly = false;
-
+	
 public:
 	// GameObject을(를) 통해 상속됨
 	virtual void Init();
@@ -59,6 +59,7 @@ public:
 	virtual void CharacterDie();
 public:
 	string CharacterCollision();
+	string FlyCollision();
 	GameObject* IsCharacterRader(float radar);
 	bool ForgCheck();
 	void CharacterAttacked(int damage, Vector2 target);

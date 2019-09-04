@@ -84,9 +84,63 @@ void Map::Init()
 		break;
 
 	case STAGE_2:
-
 		mainTexture = RESOURCEMANAGER->AddTexture("Map/Map2/map_2.png");
 
+		building = new Building(RESOURCEMANAGER->AddTexture("Map/Map2/pojang_1.png"));
+		OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+		building->pos = { -400, 200, 0 };
+
+		building = new Building(RESOURCEMANAGER->AddTexture("Map/Map2/pojang_2.png"));
+		OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+		building->pos = { -400, 0, 0 };
+
+		building = new Building(RESOURCEMANAGER->AddTexture("Map/Map2/pojang_3.png"));
+		OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+		building->pos = { 400, 200, 0 };
+
+		building = new Building(RESOURCEMANAGER->AddTexture("Map/Map2/pojang_4.png"));
+		OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+		building->pos = { 400, 0, 0 };
+
+		for (int i = 0; i < 3; i++)
+		{
+			building = new Building(RESOURCEMANAGER->AddTexture("Map/Map1/tower_2.png"));
+			OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+			building->pos = { -640 + i * 180.0f, 640, 0 };
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			building = new Building(RESOURCEMANAGER->AddTexture("Map/Map1/tower_2.png"));
+			OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+			building->pos = { 300 + i * 180.0f, 640, 0 };
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			building = new Building(RESOURCEMANAGER->AddTexture("Map/Map1/tower_2.png"));
+			OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+			building->pos = { -640 + i * 180.0f, -460, 0 };
+
+			building = new Building(RESOURCEMANAGER->AddTexture("Map/Map1/tower_2.png"));
+			OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+			building->pos = { -640 + i * 180.0f, -640, 0 };
+		}
+		for (int i = 0; i < 3; i++)
+		{
+			building = new Building(RESOURCEMANAGER->AddTexture("Map/Map1/tower_2.png"));
+			OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+			building->pos = { 300 + i * 180.0f, -460, 0 };
+
+			building = new Building(RESOURCEMANAGER->AddTexture("Map/Map1/tower_2.png"));
+			OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+			building->pos = { 300 + i * 180.0f, -640, 0 };
+		}
+		break;
+	case STAGE_3:
+		mainTexture = RESOURCEMANAGER->AddTexture("Map/Map3/map_3.png");
+
+		building = new Building(RESOURCEMANAGER->AddTexture("Map/Map3/station.png"));
+		OBJECTMANAGER->AddObject(GameObject::BACKGROUND2, building);
+		building->pos = { 0, 490, 0 };
 		break;
 	default:
 		break;

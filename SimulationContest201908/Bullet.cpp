@@ -52,7 +52,7 @@ void Bullet::Init()
 
 		radius = 5.0f;
 
-		damage = 1;
+		damage = 2;
 
 		growFire = RandomNumber(10, 30) * 0.02f;
 
@@ -60,8 +60,6 @@ void Bullet::Init()
 		break;
 	case Bullet::TANK:
 		mainTexture = RESOURCEMANAGER->AddTexture("Character/tank/tank_bullet.png");
-
-		damage = 15;
 
 		radius = 5.0f;
 
@@ -78,7 +76,10 @@ void Bullet::Init()
 			moveVector.x = cos(temp + (float)RandomNumber(-3, 3) * 0.1f);
 			moveVector.y = sin(temp + (float)RandomNumber(-3, 3) * 0.1f);
 		}
-
+		if (tag == ENEMY_BULLET)
+			damage = 10;
+		else
+			damage = 15;
 		break;
 
 	case LASER_START:
@@ -129,9 +130,11 @@ void Bullet::Init()
 	case LASER_END:
 		mainTexture = RESOURCEMANAGER->AddTexture("Effect/weapon/laser_1.png");
 		radius = 5.0f;
-		damage = 10.0f;
 		scale.y = 0.1f;
-
+		if (tag == ENEMY_BULLET)
+			damage = 10;
+		else
+			damage = 15;
 		break;
 	default:
 		break;
@@ -205,6 +208,7 @@ void Bullet::Update()
 			effect->pos = pos;
 			effect->moveVector = -moveVector;
 			effect->moveSpeed = 100;
+			OBJECTMANAGER->AddObject(EFFECT, effect);
 		}
 		
 		rotate = RotateToVec2(Vector2(pos), Vector2(pos) + moveVector);
@@ -212,12 +216,12 @@ void Bullet::Update()
 	case LASER_START:
 		if (time > 0.5f)
 			destroy = true;
-		scale.y = Lerp(scale.y, 1.0f, 0.2f);
+		scale.y = Lerp(scale.y, 1.0f, 0.25f);
 		break;
 	case LASER_BODY:
 		if (time > 0.5f)
 			destroy = true;
-		scale.y = Lerp(scale.y, 1.0f, 0.2f);
+		scale.y = Lerp(scale.y, 1.0f, 0.25f);
 		break;
 	case LASER_END:
 		if (time > 0.5f)
@@ -234,7 +238,7 @@ void Bullet::Update()
 			effect->scale = {1.5, 1.5};
 			CAMERAMANAGER->ShakeCamera(0.5f);
 		}
-		scale.y = Lerp(scale.y, 1.0f, 0.2f);
+		scale.y = Lerp(scale.y, 1.0f, 0.25f);
 		break;
 	default:
 		break;
